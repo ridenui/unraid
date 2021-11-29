@@ -1,12 +1,7 @@
-import { Client } from 'ssh2';
+import { Client, ConnectConfig } from 'ssh2';
 import { executor as Executor } from '../instance';
 
-export type SSHConfig = {
-  host: string;
-  username: string;
-  password?: string;
-  port?: number;
-};
+export type SSHConfig = ConnectConfig;
 
 export class SSHExecutor extends Executor.Executor<SSHConfig> {
   private connection: Client = new Client();
@@ -23,12 +18,7 @@ export class SSHExecutor extends Executor.Executor<SSHConfig> {
       this.connection.on('close', () => {
         this.ready = false;
       });
-      this.connection.connect({
-        host: this.config.host,
-        password: this.config.password,
-        username: this.config.username,
-        port: this.config.port ?? 22,
-      });
+      this.connection.connect(this.config);
     });
   }
 

@@ -12,7 +12,7 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
       host: process.env.SSH_HOST,
       password: process.env.SSH_PASSWORD,
       username: process.env.SSH_USER,
-      port: parseInt(process.env.SSH_PORT, 10),
+      port: parseInt(process.env.SSH_PORT ?? '22', 10),
     },
   } as UnraidConfig<SSHConfig, SSHExecutor>);
 
