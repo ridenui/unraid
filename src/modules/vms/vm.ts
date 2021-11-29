@@ -20,9 +20,9 @@ export type IVMRawReturn = {
 };
 
 export class VM<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
-  private instance: Unraid<ExecutorConfig, Ex>;
+  private readonly instance: Unraid<ExecutorConfig, Ex>;
 
-  name: string;
+  readonly name: string;
 
   state: VMState;
 

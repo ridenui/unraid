@@ -8,9 +8,9 @@ export interface UnraidConfig<ExecutorConfig, Ex extends Executor<ExecutorConfig
 }
 
 export class Unraid<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
-  executor: Ex;
+  readonly executor: Ex;
 
-  vm: VMModule<ExecutorConfig, Ex>;
+  readonly vm: VMModule<ExecutorConfig, Ex>;
 
   constructor(config: UnraidConfig<ExecutorConfig, Ex>) {
     // eslint-disable-next-line new-cap

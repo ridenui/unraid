@@ -12,7 +12,7 @@ export type IExecuteResult = {
 export type IExecuteSimple = string;
 
 export abstract class Executor<Config> {
-  config: Config;
+  readonly config: Config;
 
   // eslint-disable-next-line no-useless-constructor
   constructor(config: Config) {

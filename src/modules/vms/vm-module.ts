@@ -3,7 +3,7 @@ import { Unraid } from '../../instance/unraid';
 import { VM, VMState } from './vm';
 
 export class VMModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
-  private instance: Unraid<ExecutorConfig, Ex>;
+  private readonly instance: Unraid<ExecutorConfig, Ex>;
 
   constructor(instance: Unraid<ExecutorConfig, Ex>) {
     this.instance = instance;
