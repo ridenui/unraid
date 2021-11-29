@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/ridenui/unraid/compare/0.0.6...0.0.7) (2021-11-29)
+
+
+### Bug Fixes
+
+* **uptime:** parse correctly ([f4956de](https://github.com/ridenui/unraid/commit/f4956dec5c6137f12c962760b1d3e8fc75eaa479))
+
 ## [0.0.6](https://github.com/ridenui/unraid/compare/0.0.5...0.0.6) (2021-11-29)
 
 
