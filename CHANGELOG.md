@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/ridenui/unraid/compare/0.0.5...0.0.6) (2021-11-29)
+
+
+### Bug Fixes
+
+* correct export ([da895db](https://github.com/ridenui/unraid/commit/da895db75020078fb432ab4fedbdbf288abeaf91))
+
 ## 0.0.5 (2021-11-29)
 
 
