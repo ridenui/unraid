@@ -1,4 +1,4 @@
-import { execute } from '../../ssh/SSH';
+import { execute } from '../../executors/SSH';
 
 async function ntp(): Promise<string[]> {
   const { code, stdout } = await execute('cat /etc/ntp.conf | grep server');

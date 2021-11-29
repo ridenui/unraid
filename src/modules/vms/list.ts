@@ -1,4 +1,4 @@
-import { execute } from '../../ssh/SSH';
+import { execute } from '../../executors/SSH';
 
 async function list(): Promise<string[][]> {
   const { stdout, code } = await execute('virsh list --all');

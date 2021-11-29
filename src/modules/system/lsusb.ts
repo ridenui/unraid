@@ -1,4 +1,4 @@
-import { execute } from '../../ssh/SSH';
+import { execute } from '../../executors/SSH';
 
 const regex = /Bus\s(\d*)\sDevice\s(\d*): ID\s(.*):(\d*)\s(.*)/g;
 

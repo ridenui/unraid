@@ -1,6 +1,7 @@
-import { execute } from '../../ssh/SSH';
+import { execute } from '../../executors/SSH';
 
-const regex = /(.*)\sup\s(\d*)\sdays,\s(\d*):(\d*),\s\s(\d*)\suser,\s\sload average:\s(\d*\.\d*),\s(\d*\.\d*),\s(\d*\.\d*)/gm;
+const regex =
+  /(.*)\sup\s(\d*)\sdays,\s(\d*):(\d*),\s\s(\d*)\suser,\s\sload average:\s(\d*\.\d*),\s(\d*\.\d*),\s(\d*\.\d*)/gm;
 
 type IUptime = {
   raw: string;

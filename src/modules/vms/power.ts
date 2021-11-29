@@ -1,4 +1,4 @@
-import { execute } from '../../ssh/SSH';
+import { execute } from '../../executors/SSH';
 
 type IVMShutdownModes = 'acpi' | 'agent' | 'initctl' | 'signal' | 'paravirt';
 
