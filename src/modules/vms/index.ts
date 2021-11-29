@@ -1,2 +1,2 @@
-export * from './list';
-export * from './power';
+export * as VM from './vm';
+export * as VMModule from './vm-module';
