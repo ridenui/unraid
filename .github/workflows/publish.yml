@@ -32,6 +32,6 @@ jobs:
       - name: Setup Registry Auth
         run: npm config set //registry.npmjs.org/:_authToken $HIGH5_NPM_TOKEN
       - name: Release It
-        run: yarn release
+        run: yarn release --ci
         env:
           GITHUB_TOKEN: ${{ secrets.HIGH5_BOT_TOKEN }}
