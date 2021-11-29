@@ -11,10 +11,7 @@ export type IExecuteResult = {
 
 export type IExecuteSimple = string;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IExecutorConfig {}
-
-export abstract class Executor<Config extends IExecutorConfig> {
+export abstract class Executor<Config> {
   config: Config;
 
   // eslint-disable-next-line no-useless-constructor

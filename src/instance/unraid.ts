@@ -1,17 +1,21 @@
+import { VMModule } from '../modules/vms/vm-module';
 import { Type } from '../util';
-import { Executor, IExecute, IExecuteResult, IExecuteSimple, IExecutorConfig } from './executor';
+import { Executor, IExecute, IExecuteResult, IExecuteSimple } from './executor';
 
-interface UnraidConfig<Ex extends Executor<unknown>> {
+export interface UnraidConfig<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
   executor: Type<Ex>;
-  executorConfig: IExecutorConfig;
+  executorConfig: ExecutorConfig;
 }
 
-export class Unraid<Ex extends Executor<unknown>> {
-  private executor: Ex;
+export class Unraid<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
+  executor: Ex;
 
-  constructor(config: UnraidConfig<Ex>) {
+  vm: VMModule<ExecutorConfig, Ex>;
+
+  constructor(config: UnraidConfig<ExecutorConfig, Ex>) {
     // eslint-disable-next-line new-cap
     this.executor = new config.executor(config.executorConfig);
+    this.vm = new VMModule<ExecutorConfig, Ex>(this);
   }
 
   async execute(command: IExecuteSimple): Promise<IExecuteResult>;

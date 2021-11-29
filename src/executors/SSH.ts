@@ -6,7 +6,7 @@ export type SSHConfig = {
   username: string;
   password?: string;
   port?: number;
-} & Executor.IExecutorConfig;
+};
 
 export class SSHExecutor extends Executor.Executor<SSHConfig> {
   private connection: Client = new Client();
