@@ -1,2 +1,4 @@
-export * as ssh from './executors/SSH';
-export * as vm from './modules/vms/vm-module';
+import { Unraid } from './instance/unraid';
+
+export * from './executors/index';
+export { Unraid };
