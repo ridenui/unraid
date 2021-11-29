@@ -2,7 +2,7 @@ import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 const regex =
-  /(.*)\sup\s(\d*)\sdays,\s(\d*):(\d*),\s\s(\d*)\suser,\s\sload average:\s(\d*\.\d*),\s(\d*\.\d*),\s(\d*\.\d*)/gm;
+  /(.*)\sup\s(\d*)\sdays,\s\s(\d*):(\d*),\s\s(\d*)\suser,\s\sload average:\s(\d*\.\d*),\s(\d*\.\d*),\s(\d*\.\d*)/gm;
 
 export type IUptime = {
   raw: string;
