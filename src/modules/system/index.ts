@@ -1,10 +1,1 @@
-export * from './date';
-export * from './diskfree';
-export * from './info';
-export * from './lsblk';
-export * from './lsusb';
-export * from './ntp';
-export * from './smartctl';
-export * from './syslog';
-export * from './uptime';
-export * from './users';
+export * as SystemModule from './system-module';

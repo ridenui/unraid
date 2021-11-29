@@ -1,3 +1,4 @@
+import { SystemModule } from '../modules/system/system-module';
 import { VMModule } from '../modules/vms/vm-module';
 import { Type } from '../util';
 import { Executor, IExecute, IExecuteResult, IExecuteSimple } from './executor';
@@ -12,10 +13,13 @@ export class Unraid<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
 
   readonly vm: VMModule<ExecutorConfig, Ex>;
 
+  readonly system: SystemModule<ExecutorConfig, Ex>;
+
   constructor(config: UnraidConfig<ExecutorConfig, Ex>) {
     // eslint-disable-next-line new-cap
     this.executor = new config.executor(config.executorConfig);
     this.vm = new VMModule<ExecutorConfig, Ex>(this);
+    this.system = new SystemModule<ExecutorConfig, Ex>(this);
   }
 
   async execute(command: IExecuteSimple): Promise<IExecuteResult>;
