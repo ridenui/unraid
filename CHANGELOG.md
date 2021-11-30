@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/ridenui/unraid/compare/0.3.0...0.4.0) (2021-11-30)
+
+
+### Features
+
+* **unraid:** add notifications ([#7](https://github.com/ridenui/unraid/issues/7)) ([afd12e9](https://github.com/ridenui/unraid/commit/afd12e9dd43d3e54c2494fae0dfa39d3099fb9d5))
+
 # [0.3.0](https://github.com/ridenui/unraid/compare/0.2.0...0.3.0) (2021-11-30)
 
 
