@@ -1,15 +1,16 @@
 import { mix } from 'ts-mixer';
 import { Executor } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
-import { UnraidModuleCaseModelExtension } from './extensions';
+import { UnraidModuleCaseModelExtension, UnraidModuleNotificationExtension } from './extensions';
 
 // required for mixins
 export interface UnraidModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>>
-  extends UnraidModuleCaseModelExtension<ExecutorConfig, Ex> {
+  extends UnraidModuleNotificationExtension<ExecutorConfig, Ex>,
+    UnraidModuleCaseModelExtension<ExecutorConfig, Ex> {
   instance: Unraid<ExecutorConfig, Ex>;
 }
 
-@mix(UnraidModuleCaseModelExtension)
+@mix(UnraidModuleCaseModelExtension, UnraidModuleNotificationExtension)
 export class UnraidModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
   instance: Unraid<ExecutorConfig, Ex>;
 
