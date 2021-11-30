@@ -11,7 +11,7 @@ export class SystemModuleLsblkExtension<
 > extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
   /**
    * List all block devices
-   * @param all - toggles --all flag in lsblk
+   * @param all - toggles `--all` flag in `lsblk`
    * @example Get basic information
    * ```ts
    * await lsblk();

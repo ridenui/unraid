@@ -1,8 +1,8 @@
 {
   "name": "Unraid API Client",
-  "entryPoints": ["src/index.ts"],
+  "entryPoints": ["src/modules/"],
+  "entryPointStrategy": "Expand",
   "out": "docs",
-  "theme": "minimal",
-  "includeVersion": true,
-  "toc": ["System", "Virtual Machines"]
+  "theme": "default",
+  "includeVersion": true
 }
