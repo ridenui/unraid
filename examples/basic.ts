@@ -16,7 +16,7 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
     },
   } as UnraidConfig<SSHConfig, SSHExecutor>);
 
-  const lsusb = await unraid.system.lsusb();
+  const lsusb = await unraid.system.loadAverage();
 
   console.log(lsusb);
 
