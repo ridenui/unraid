@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/ridenui/unraid/compare/0.1.1...0.2.0) (2021-11-30)
+
+
+### Features
+
+* **system:** improve uptime and add loadaverage ([#5](https://github.com/ridenui/unraid/issues/5)) ([afc3f00](https://github.com/ridenui/unraid/commit/afc3f00234c5aeb40d5a8f7f0f7819adb90d2ad0))
+
 ## [0.1.1](https://github.com/ridenui/unraid/compare/0.1.0...0.1.1) (2021-11-30)
 
 
