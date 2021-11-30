@@ -2,12 +2,10 @@
     This is a very basic example. Make sure to set your environment correctly.
     If you don't know how, check out the README.md :)
  */
-import { SSHConfig, SSHExecutor } from '../src/executors/SSH';
+import { SSHConfig, SSHExecutor } from '../src';
 import { Unraid, UnraidConfig } from '../src/instance/unraid';
 
 (async () => {
-  console.log('Start');
-
   const unraid = new Unraid({
     executor: SSHExecutor,
     executorConfig: {
@@ -18,31 +16,9 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
     },
   } as UnraidConfig<SSHConfig, SSHExecutor>);
 
-  const vms = await unraid.vm.list();
+  const lsusb = await unraid.system.lsusb();
 
-  console.log(vms);
-
-  const remoteDate = await unraid.system.date(true);
-
-  const diskfree = await unraid.system.diskfree();
-
-  const info = await unraid.system.info();
-
-  const lsblk = await unraid.system.lsblk({ all: true });
-
-  // const lsusb = await unraid.system.lsusb();
-
-  const ntp = await unraid.system.ntp();
-
-  const smartctl = await unraid.system.smartctl({ deviceName: '/dev/sda1', all: true });
-
-  const syslog = await unraid.system.syslog({ lines: 10 });
-
-  // const uptime = await unraid.system.uptime();
-
-  const users = await unraid.system.users();
-
-  console.log({ remoteDate, diskfree, info, lsblk, ntp, smartctl, syslog, users });
+  console.log(lsusb);
 
   unraid.executor.disconnect();
 })();
