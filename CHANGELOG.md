@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/ridenui/unraid/compare/0.2.0...0.3.0) (2021-11-30)
+
+
+### Features
+
+* add unraid module and fix docgen ([#6](https://github.com/ridenui/unraid/issues/6)) ([b251357](https://github.com/ridenui/unraid/commit/b2513571e1473761ee1cad84a9efe881140dfcd3))
+
 # [0.2.0](https://github.com/ridenui/unraid/compare/0.1.1...0.2.0) (2021-11-30)
 
 
