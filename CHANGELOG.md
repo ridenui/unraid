@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/ridenui/unraid/compare/0.1.0...0.1.1) (2021-11-30)
+
+
+### Bug Fixes
+
+* **lsusb:** regex ([897ab07](https://github.com/ridenui/unraid/commit/897ab07fe4cd1952888bc0a13976b25ecc28c130))
+
 # [0.1.0](https://github.com/ridenui/unraid/compare/0.0.7...0.1.0) (2021-11-29)
 
 
