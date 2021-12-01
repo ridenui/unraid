@@ -2909,11 +2909,6 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-native-ssh-sftp@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-ssh-sftp/-/react-native-ssh-sftp-1.0.3.tgz#42c4a0e5c12d3c64cec605ded62dabd83253794d"
-  integrity sha1-QsSg5cEtPGTOxgXe1i2r2DJTeU0=
-
 read-pkg-up@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-3.0.0.tgz#3ed496685dba0f8fe118d0691dc51f4a1ff96f07"

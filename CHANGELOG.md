@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/ridenui/unraid/compare/0.4.0...0.4.1) (2021-12-01)
+
+
+### Bug Fixes
+
+* **ci:** do not required clean git working dir for release ([0a285e3](https://github.com/ridenui/unraid/commit/0a285e3b36bf5289670c0b43106ddcdfb8f7552b))
+* **ci:** do not required clean git working dir for release ([2806f57](https://github.com/ridenui/unraid/commit/2806f5769259030d84ae36c2b13d599767c2b1a6))
+* **ci:** temporary disable zip creation ([ab1e4f7](https://github.com/ridenui/unraid/commit/ab1e4f7aa31a49ea5c93792cd7ff44a3bae29830))
+
 # [0.4.0](https://github.com/ridenui/unraid/compare/0.3.0...0.4.0) (2021-11-30)
 
 
