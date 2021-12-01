@@ -38,8 +38,8 @@ jobs:
         run: yarn
       - name: Build
         run: yarn tsc
-      - name: Prepare zip
-        run: zip -r dist.zip dist package.json yarn.lock
+      # - name: Prepare zip
+      #   run: zip -r dist.zip dist package.json yarn.lock
       - name: Release It
         run: yarn release --ci
         env:
