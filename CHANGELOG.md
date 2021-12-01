@@ -1,3 +1,15 @@
+# [0.6.0](https://github.com/ridenui/unraid/compare/0.5.0...0.6.0) (2021-12-01)
+
+
+### Bug Fixes
+
+* **type:** fix duplicated identifiers ([28fe1b3](https://github.com/ridenui/unraid/commit/28fe1b3a9c5484f0ef42854bd653ecc103fbcc7a))
+
+
+### Features
+
+* **type:** export all interfaces and types for the executor class ([a475498](https://github.com/ridenui/unraid/commit/a475498cd57b02ec12797574cfb216947e0a40fe))
+
 # [0.5.0](https://github.com/ridenui/unraid/compare/0.4.1...0.5.0) (2021-12-01)
 
 
