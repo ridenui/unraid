@@ -34,7 +34,7 @@
     "react-native-ssh-sftp": "^1.0.3"
   },
   "scripts": {
-    "release": "release-it --no-requireCleanWorkingDir"
+    "release": "release-it"
   },
   "publishConfig": {
     "access": "public",

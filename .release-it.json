@@ -4,7 +4,8 @@
   },
   "git": {
     "commitMessage": "chore(release): v${version}",
-    "assets": ["dist.zip"]
+    "assets": ["dist.zip"],
+    "requireCleanWorkingDir": false
   },
   "plugins": {
     "@release-it/conventional-changelog": {
