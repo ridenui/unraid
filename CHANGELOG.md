@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/ridenui/unraid/compare/0.4.1...0.5.0) (2021-12-01)
+
+
+### Features
+
+* **type:** export Executor class ([8cbf323](https://github.com/ridenui/unraid/commit/8cbf32345af579e1d5b1732f65d9ec3d76ba5174))
+
 ## [0.4.1](https://github.com/ridenui/unraid/compare/0.4.0...0.4.1) (2021-12-01)
 
 
