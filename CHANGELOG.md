@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/ridenui/unraid/compare/0.6.0...0.6.1) (2021-12-02)
+
+
+### Bug Fixes
+
+* remove ssh2 executor from default export ([e6ac57c](https://github.com/ridenui/unraid/commit/e6ac57c3ee804c11d0f629305a5f628ddecaeacc))
+
 # [0.6.0](https://github.com/ridenui/unraid/compare/0.5.0...0.6.0) (2021-12-01)
 
 
