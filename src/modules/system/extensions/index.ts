@@ -1,5 +1,6 @@
 export * from './date';
 export * from './diskfree';
+export * from './hostname';
 export * from './info';
 export * from './loadaverage';
 export * from './lsblk';

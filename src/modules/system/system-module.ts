@@ -4,6 +4,7 @@ import { Unraid } from '../../instance/unraid';
 import {
   SystemModuleDateExtension,
   SystemModuleDiskfree,
+  SystemModuleHostnameExtension,
   SystemModuleInfoExtension,
   SystemModuleLoadAverageExtension,
   SystemModuleLsblkExtension,
@@ -19,6 +20,7 @@ import {
 export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>>
   extends SystemModuleDateExtension<ExecutorConfig, Ex>,
     SystemModuleDiskfree<ExecutorConfig, Ex>,
+    SystemModuleHostnameExtension<ExecutorConfig, Ex>,
     SystemModuleInfoExtension<ExecutorConfig, Ex>,
     SystemModuleLoadAverageExtension<ExecutorConfig, Ex>,
     SystemModuleLsblkExtension<ExecutorConfig, Ex>,
@@ -34,6 +36,7 @@ export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig
 @mix(
   SystemModuleDateExtension,
   SystemModuleDiskfree,
+  SystemModuleHostnameExtension,
   SystemModuleInfoExtension,
   SystemModuleLoadAverageExtension,
   SystemModuleLsblkExtension,
