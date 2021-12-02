@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/ridenui/unraid/compare/0.6.1...0.7.0) (2021-12-02)
+
+
+### Features
+
+* add hostname module ([66d7de0](https://github.com/ridenui/unraid/commit/66d7de01d40582b26933db4daf1208777f5281c8))
+
 ## [0.6.1](https://github.com/ridenui/unraid/compare/0.6.0...0.6.1) (2021-12-02)
 
 
