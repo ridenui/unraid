@@ -2,7 +2,7 @@
     This is a very basic example. Make sure to set your environment correctly.
     If you don't know how, check out the README.md :)
  */
-import { SSHConfig, SSHExecutor } from '../src';
+import { SSHConfig, SSHExecutor } from '../src/executors';
 import { Unraid, UnraidConfig } from '../src/instance/unraid';
 
 (async () => {

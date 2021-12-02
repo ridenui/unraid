@@ -1,6 +1,5 @@
-import { Unraid } from './instance/unraid';
 import { Executor } from './instance/executor';
+import { Unraid } from './instance/unraid';
 
-export * from './executors/index';
 export * as IExecutor from './instance/executor';
-export { Unraid, Executor };
+export { Executor, Unraid };
