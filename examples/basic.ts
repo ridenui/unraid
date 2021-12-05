@@ -20,6 +20,10 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
 
   console.log(hostname);
 
+  const usage = await unraid.system.usage();
+
+  console.log(usage);
+
   const [cancel] = unraid.system.on('syslog', (line) => {
     console.log(`New line: ${line}`);
   });
@@ -28,10 +32,15 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
     console.log(load);
   });
 
+  const [cancelUsage] = unraid.system.on('cpuUsage', (currentUsage) => {
+    console.log(currentUsage);
+  });
+
   await new Promise<void>((resolve) => {
     setTimeout(() => {
       cancel();
       cancelLoad();
+      cancelUsage();
       resolve();
     }, 5000);
   });

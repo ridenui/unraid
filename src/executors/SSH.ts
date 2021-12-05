@@ -46,15 +46,37 @@ export class SSHExecutor extends Executor.Executor<SSHConfig> {
           stderr: [],
           stdout: [],
         };
+        let lineBufferStdout = '';
+        let lineBufferStderr = '';
         stream.stdout.on('data', (data) => {
-          const output = data.toString().trim().split('\n');
-          response.stdout = response.stdout.concat(output);
+          const dataString = data.toString();
+          for (let i = 0; i < dataString.length; i++) {
+            if (dataString[i] === '\n') {
+              response.stdout = response.stdout.concat(lineBufferStdout);
+              lineBufferStdout = '';
+            } else {
+              lineBufferStdout += dataString[i];
+            }
+          }
         });
         stream.stderr.on('data', (data) => {
-          const output = data.toString().trim().split('\n');
-          response.stderr = response.stderr.concat(output);
+          const dataString = data.toString();
+          for (let i = 0; i < dataString.length; i++) {
+            if (dataString[i] === '\n') {
+              response.stderr = response.stderr.concat(lineBufferStderr);
+              lineBufferStderr = '';
+            } else {
+              lineBufferStderr += dataString[i];
+            }
+          }
         });
         stream.on('close', (code, signal) => {
+          if (lineBufferStdout) {
+            response.stdout = response.stdout.concat(lineBufferStdout);
+          }
+          if (lineBufferStderr) {
+            response.stderr = response.stderr.concat(lineBufferStderr);
+          }
           resolve({
             ...response,
             code,

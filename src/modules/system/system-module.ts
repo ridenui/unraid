@@ -17,6 +17,7 @@ import {
   SystemModuleUptimeExtension,
   SystemModuleUsersExtension,
 } from './extensions';
+import { CPUUsage, ICpuUsageStreamOption, SystemModuleCpuExtension } from './extensions/cpu';
 
 // required for mixins
 export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>>
@@ -26,6 +27,7 @@ export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig
       {
         syslog: { handlerType: string };
         loadAverage: { handlerType: ILoadAverage; optionType: ILoadAverageStreamOption };
+        cpuUsage: { handlerType: CPUUsage; options: ICpuUsageStreamOption };
       }
     >,
     SystemModuleDateExtension<ExecutorConfig, Ex>,
@@ -39,6 +41,7 @@ export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig
     SystemModuleSmartctlExtension<ExecutorConfig, Ex>,
     SystemModuleSyslogExtension<ExecutorConfig, Ex>,
     SystemModuleUptimeExtension<ExecutorConfig, Ex>,
+    SystemModuleCpuExtension<ExecutorConfig, Ex>,
     SystemModuleUsersExtension<ExecutorConfig, Ex> {
   instance: Unraid<ExecutorConfig, Ex>;
 }
@@ -56,7 +59,8 @@ export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig
   SystemModuleSmartctlExtension,
   SystemModuleSyslogExtension,
   SystemModuleUptimeExtension,
-  SystemModuleUsersExtension
+  SystemModuleUsersExtension,
+  SystemModuleCpuExtension
 )
 export class SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
   instance: Unraid<ExecutorConfig, Ex>;
