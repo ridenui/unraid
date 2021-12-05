@@ -24,9 +24,14 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
     console.log(`New line: ${line}`);
   });
 
+  const [cancelLoad] = unraid.system.on('loadAverage', (load) => {
+    console.log(load);
+  });
+
   await new Promise<void>((resolve) => {
     setTimeout(() => {
       cancel();
+      cancelLoad();
       resolve();
     }, 5000);
   });
