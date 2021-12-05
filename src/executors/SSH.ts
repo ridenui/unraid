@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events';
 import { Client, ConnectConfig } from 'ssh2';
 import { executor as Executor } from '../instance';
 
@@ -37,7 +38,10 @@ export class SSHExecutor extends Executor.Executor<SSHConfig> {
     return new Promise((resolve, reject) => {
       if (typeof command === 'object') command = command.command;
       this.connection.exec(command, (err, stream) => {
-        if (err) reject(err);
+        if (err) {
+          reject(err);
+          return;
+        }
         const response = {
           stderr: [],
           stdout: [],
@@ -59,5 +63,85 @@ export class SSHExecutor extends Executor.Executor<SSHConfig> {
         });
       });
     });
+  }
+
+  async executeStream(
+    command: Executor.IExecuteSimple | Executor.IExecute
+  ): Promise<[EventEmitter, Executor.CancelFunction, Promise<Executor.IExecuteStreamResult>]> {
+    if (!this.ready) await this.connect();
+    if (typeof command === 'object') command = command.command;
+    let resolve: (value: Executor.IExecuteStreamResult | PromiseLike<Executor.IExecuteStreamResult>) => void;
+    let reject: (reason: any) => void;
+    let didExit = false;
+    const resolvePromise = new Promise<Executor.IExecuteStreamResult>((re, rej) => {
+      resolve = re;
+      reject = rej;
+    });
+    const eventEmitter = new EventEmitter();
+    let internalCancelCallback;
+    const cancelCallback = async () => {
+      if (internalCancelCallback) {
+        internalCancelCallback();
+      }
+    };
+    this.connection.exec(command, (err, stream) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      internalCancelCallback = () => {
+        stream.signal('SIGABRT');
+        setTimeout(() => {
+          if (!didExit) {
+            stream.signal('SIGKILL');
+            stream.close();
+          }
+        }, 1000);
+      };
+      let lineBufferStdout = '';
+      let lineBufferStderr = '';
+      stream.stdout.on('data', (data) => {
+        const dataString = data.toString();
+        eventEmitter.emit('onStdout', dataString);
+        for (let i = 0; i < dataString.length; i++) {
+          if (dataString[i] === '\n') {
+            eventEmitter.emit('onNewStdoutLine', lineBufferStdout);
+            lineBufferStdout = '';
+          } else {
+            lineBufferStdout += dataString[i];
+          }
+        }
+      });
+      stream.stderr.on('data', (data) => {
+        const dataString = data.toString();
+        eventEmitter.emit('onStderr', dataString);
+        for (let i = 0; i < dataString.length; i++) {
+          if (dataString[i] === '\n') {
+            eventEmitter.emit('onNewStderrLine', lineBufferStderr);
+            lineBufferStderr = '';
+          } else {
+            lineBufferStderr += dataString[i];
+          }
+        }
+      });
+      stream.stdout.on('end', () => {
+        if (lineBufferStdout) {
+          eventEmitter.emit('onNewStdoutLine', lineBufferStdout);
+        }
+      });
+      stream.stderr.on('end', () => {
+        if (lineBufferStderr) {
+          eventEmitter.emit('onNewStderrLine', lineBufferStderr);
+        }
+      });
+      stream.on('close', (code, signal) => {
+        didExit = true;
+        resolve({
+          code,
+          signal,
+        });
+      });
+    });
+    return [eventEmitter, cancelCallback, resolvePromise];
   }
 }

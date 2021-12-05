@@ -34,7 +34,8 @@
     "react-native-ssh-sftp": "^1.0.3"
   },
   "scripts": {
-    "release": "release-it"
+    "release": "release-it",
+    "example:basic": "ts-node -r dotenv/config examples/basic.ts"
   },
   "publishConfig": {
     "access": "public",

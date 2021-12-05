@@ -14,4 +14,38 @@ export class SystemModuleSyslogExtension<
     if (code !== 0) throw new Error('Got non-zero exit code while reading syslog');
     return stdout;
   }
+
+  on_syslog(listener: (newLine: string) => void): [() => void] {
+    let cancelFunction;
+
+    if (!this.instance.executor.executeStream) {
+      throw new Error('Streaming is not supported by this executor');
+    }
+
+    const promise = this.instance.executor
+      .executeStream('tail -n -0 -f /var/log/syslog')
+      .then(([eventEmitter, cancel, exitPromise]) => {
+        cancelFunction = () => {
+          cancel().finally(() => {
+            eventEmitter.removeAllListeners('onNewStdoutLine');
+          });
+        };
+        eventEmitter.addListener('onNewStdoutLine', (line) => {
+          listener(line);
+        });
+        exitPromise.finally(() => {
+          eventEmitter.removeAllListeners('onNewStdoutLine');
+        });
+      });
+
+    return [
+      () => {
+        promise.finally(() => {
+          if (cancelFunction) {
+            cancelFunction();
+          }
+        });
+      },
+    ];
+  }
 }

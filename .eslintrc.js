@@ -25,6 +25,7 @@ module.exports = {
     'no-param-reassign': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     '@typescript-eslint/no-use-before-define': ['error'],
+    'no-plusplus': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
