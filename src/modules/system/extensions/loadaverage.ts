@@ -15,6 +15,13 @@ export type ILoadAverage = {
   };
 };
 
+export type ILoadAverageStreamOption = {
+  /**
+   * Refresh time in seconds
+   */
+  refresh?: number;
+};
+
 export class SystemModuleLoadAverageExtension<
   ExecutorConfig,
   Ex extends Executor<ExecutorConfig>
@@ -23,11 +30,15 @@ export class SystemModuleLoadAverageExtension<
     const { code, stdout } = await this.instance.execute('cat /proc/loadavg');
     if (code !== 0) throw new Error('Got non-zero exit code while getting loadaverage');
 
-    const [one, five, fifteen, kseInfo, lastPid] = stdout[0].split(' ');
+    return SystemModuleLoadAverageExtension.parseLoadAverage(stdout[0]);
+  }
+
+  private static parseLoadAverage(input: string): ILoadAverage {
+    const [one, five, fifteen, kseInfo, lastPid] = input.split(' ');
     const [currentlyExecuted, existing] = kseInfo.split('/');
 
     return {
-      raw: stdout[0],
+      raw: input,
       lastPid: parseInt(lastPid, 10),
       loadAverage: {
         '1': parseInt(one, 10),
@@ -39,5 +50,41 @@ export class SystemModuleLoadAverageExtension<
         existing: parseInt(existing, 10),
       },
     };
+  }
+
+  on_loadAverage(listener: (newLoad: ILoadAverage) => void, options?: ILoadAverageStreamOption): [() => void] {
+    let cancelFunction;
+
+    if (!this.instance.executor.executeStream) {
+      throw new Error('Streaming is not supported by this executor');
+    }
+
+    const refresh = options?.refresh ?? 1;
+
+    const promise = this.instance.executor
+      .executeStream(`while [ 1 ]; do cat /proc/loadavg; sleep ${refresh}; done`)
+      .then(([eventEmitter, cancel, exitPromise]) => {
+        cancelFunction = () => {
+          cancel().finally(() => {
+            eventEmitter.removeAllListeners('onNewStdoutLine');
+          });
+        };
+        eventEmitter.addListener('onNewStdoutLine', (line) => {
+          listener(SystemModuleLoadAverageExtension.parseLoadAverage(line));
+        });
+        exitPromise.finally(() => {
+          eventEmitter.removeAllListeners('onNewStdoutLine');
+        });
+      });
+
+    return [
+      () => {
+        promise.finally(() => {
+          if (cancelFunction) {
+            cancelFunction();
+          }
+        });
+      },
+    ];
   }
 }
