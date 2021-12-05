@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/ridenui/unraid/compare/0.8.0...0.9.0) (2021-12-05)
+
+
+### Features
+
+* **system:** add load average event stream ([#10](https://github.com/ridenui/unraid/issues/10)) ([9ec0dd8](https://github.com/ridenui/unraid/commit/9ec0dd879cf691ded4e2298020745cb969dfd660))
+
 # [0.8.0](https://github.com/ridenui/unraid/compare/0.7.0...0.8.0) (2021-12-05)
 
 
