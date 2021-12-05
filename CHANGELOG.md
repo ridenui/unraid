@@ -1,3 +1,10 @@
+## [0.11.1](https://github.com/ridenui/unraid/compare/0.11.0...0.11.1) (2021-12-05)
+
+
+### Bug Fixes
+
+* **system:** correct the usage of mpstat to receive cpu usage ([#12](https://github.com/ridenui/unraid/issues/12)) ([ffc48c6](https://github.com/ridenui/unraid/commit/ffc48c6cdd024f8edf335a243e982c8a191c9210))
+
 # [0.11.0](https://github.com/ridenui/unraid/compare/0.10.0...0.11.0) (2021-12-05)
 
 
