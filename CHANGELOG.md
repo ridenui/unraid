@@ -1,3 +1,11 @@
+# [0.10.0](https://github.com/ridenui/unraid/compare/0.8.0...0.10.0) (2021-12-05)
+
+
+### Features
+
+* **system:** add load average event stream ([#10](https://github.com/ridenui/unraid/issues/10)) ([9ec0dd8](https://github.com/ridenui/unraid/commit/9ec0dd879cf691ded4e2298020745cb969dfd660))
+* **unraid:** add identconfig module ([#11](https://github.com/ridenui/unraid/issues/11)) ([6e04cd4](https://github.com/ridenui/unraid/commit/6e04cd46298dbb7910c172b5b365ae3fd2cd574e))
+
 # [0.8.0](https://github.com/ridenui/unraid/compare/0.7.0...0.8.0) (2021-12-05)
 
 
