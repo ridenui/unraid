@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/ridenui/unraid/compare/0.10.0...0.11.0) (2021-12-05)
+
+
+### Features
+
+* **system:** add cpu core usage ([1b32bd4](https://github.com/ridenui/unraid/commit/1b32bd42ad7dbc5ef480542485a536406ae522f9))
+
 # [0.10.0](https://github.com/ridenui/unraid/compare/0.8.0...0.10.0) (2021-12-05)
 
 
