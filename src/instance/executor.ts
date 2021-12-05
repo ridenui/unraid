@@ -1,3 +1,5 @@
+import type { EventEmitter } from 'events';
+
 export type IExecute = {
   command: string;
 };
@@ -9,12 +11,25 @@ export type IExecuteResult = {
   signal?: unknown;
 };
 
+export type IExecuteStreamResult = {
+  code: number;
+  signal?: unknown;
+};
+
 export type IExecuteSimple = string;
+
+export type CancelFunction = () => Promise<void>;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export interface Executor<Config> {
+  executeStream?(
+    command: IExecuteSimple | IExecute
+  ): Promise<[EventEmitter, CancelFunction, Promise<IExecuteStreamResult>]>;
+}
 
 export abstract class Executor<Config> {
   readonly config: Config;
 
-  // eslint-disable-next-line no-useless-constructor
   constructor(config: Config) {
     this.config = config;
   }

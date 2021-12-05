@@ -16,9 +16,20 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
     },
   } as UnraidConfig<SSHConfig, SSHExecutor>);
 
-  const lsusb = await unraid.system.getHostname();
+  const hostname = await unraid.system.getHostname();
 
-  console.log(lsusb);
+  console.log(hostname);
+
+  const [cancel] = unraid.system.on('syslog', (line) => {
+    console.log(`New line: ${line}`);
+  });
+
+  await new Promise<void>((resolve) => {
+    setTimeout(() => {
+      cancel();
+      resolve();
+    }, 5000);
+  });
 
   unraid.executor.disconnect();
 })();
