@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/ridenui/unraid/compare/0.7.0...0.8.0) (2021-12-05)
+
+
+### Features
+
+* **syslog:** add syslog event stream ([#9](https://github.com/ridenui/unraid/issues/9)) ([05135ce](https://github.com/ridenui/unraid/commit/05135ce8569bbef5fa4380f3eeb8ed776ed81631))
+
 # [0.7.0](https://github.com/ridenui/unraid/compare/0.6.1...0.7.0) (2021-12-02)
 
 
