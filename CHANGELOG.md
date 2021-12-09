@@ -1,3 +1,10 @@
+## [0.11.2](https://github.com/ridenui/unraid/compare/0.11.1...0.11.2) (2021-12-09)
+
+
+### Bug Fixes
+
+* **system:** use top instead of mpstats ([#13](https://github.com/ridenui/unraid/issues/13)) ([797c98e](https://github.com/ridenui/unraid/commit/797c98e3d8767459546f9088a597f1aefdb2cca2))
+
 ## [0.11.1](https://github.com/ridenui/unraid/compare/0.11.0...0.11.1) (2021-12-05)
 
 
