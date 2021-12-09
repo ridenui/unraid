@@ -3,16 +3,38 @@ import type { RecursivePartial } from '../../../util/type';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 export interface CoreUsage {
+  /**
+   * time running un-niced user processes
+   */
   usr: number;
+  /**
+   * time running niced user processes
+   */
   nice: number;
+  /**
+   * time running kernel processes
+   */
   sys: number;
-  iowait: number;
-  irq: number;
-  soft: number;
-  steal: number;
-  guest: number;
-  gnice: number;
+  /**
+   * time waiting for I/O completion
+   */
+  ioWait: number;
+  /**
+   * time spent in the kernel idle handler
+   */
   idle: number;
+  /**
+   * time spent servicing hardware interrupts
+   */
+  hardwareInterrupts: number;
+  /**
+   * time spent servicing software interrupts
+   */
+  softwareInterrupts: number;
+  /**
+   * time stolen from this vm by the hypervisor
+   */
+  steal: number;
 }
 
 export interface CPUUsage {
@@ -29,49 +51,18 @@ export type ICpuUsageStreamOption = {
   refresh?: number;
 };
 
-interface CPULoad {
-  cpu?: string;
-  usr?: number;
-  nice?: number;
-  sys?: number;
-  iowait?: number;
-  irq?: number;
-  soft?: number;
-  steal?: number;
-  guest?: number;
-  gnice?: number;
-  idle?: number;
-}
-
-interface Statistic {
-  timestamp?: string;
-  'cpu-load'?: CPULoad[];
-}
-
-interface Host {
-  nodename?: string;
-  sysname?: string;
-  release?: string;
-  machine?: string;
-  'number-of-cpus'?: number;
-  date?: string;
-  statistics?: Statistic[];
-}
-
-interface Sysstat {
-  hosts?: Host[];
-}
-
-interface MPStat {
-  sysstat?: Sysstat;
-}
-
 export class SystemModuleCpuExtension<
   ExecutorConfig,
   Ex extends Executor<ExecutorConfig>
 > extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+  private static cpuUsageCommand = `TERM=xterm top -1 -n 1 -b | grep '^%Cpu[[:digit:]+]' | tr '\n' '|'`;
+
+  private static cpuLineRegex =
+    /%Cpu(?<cpu_core>\d+)\s+:\s+(?<user>\d+.\d+(?=\s+us)).*,\s*(?<system>\d+.\d+(?=\s+sy)).*,\s*(?<nice>\d+.\d+(?=\s+ni)).*,\s*(?<idle>\d+.\d+(?=\s+id)).*,\s*(?<io_wait>\d+.\d+(?=\s+wa)).*,\s*(?<hardware_interrupts>\d+.\d+(?=\s+hi)).*,\s*(?<software_interrupts>\d+.\d+(?=\s+si)).*,\s*(?<steal>\d+.\d+(?=\s+st))/gm;
+
   async usage(): Promise<CPUUsage> {
-    const { code, stdout } = await this.instance.execute(`mpstat -P ALL 1 1 -o JSON`);
+    const { code, stdout } = await this.instance.execute(SystemModuleCpuExtension.cpuUsageCommand);
+    console.log({ stdout });
     if (code !== 0) throw new Error('Got non-zero exit code while getting date');
 
     return SystemModuleCpuExtension.parseCpuUsageOutput(stdout);
@@ -79,35 +70,70 @@ export class SystemModuleCpuExtension<
 
   private static parseCpuUsageOutput(input: string[]): CPUUsage {
     const tempUsage: RecursivePartial<CPUUsage> = {
-      all: {},
+      all: {
+        usr: 0,
+        sys: 0,
+        nice: 0,
+        hardwareInterrupts: 0,
+        idle: 0,
+        ioWait: 0,
+        softwareInterrupts: 0,
+        steal: 0,
+      } as CoreUsage,
       cores: [],
       raw: [...input],
     };
 
-    try {
-      const parsedJson: MPStat = JSON.parse(input.join(''));
+    // %Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+    // %Cpu7  :  0.0 us,  5.0 sy,  0.0 ni, 95.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+    const coreLines = input
+      .join('')
+      .split('|')
+      .filter((v) => v);
 
-      const load = parsedJson.sysstat.hosts[0].statistics[0]['cpu-load'];
-
-      for (const { cpu, ...coreLoad } of load) {
-        if (cpu === 'all') {
-          tempUsage.all = {
-            ...coreLoad,
-          };
-        } else {
-          tempUsage.cores.push({
-            core: tempUsage.cores.length,
-            ...coreLoad,
-          });
-        }
-      }
-
-      tempUsage.coreCount = tempUsage.cores.length;
-
-      return tempUsage as Required<CPUUsage>;
-    } catch (e) {
-      throw new Error('Failed to parse mpstat output');
+    for (const line of coreLines) {
+      const match = SystemModuleCpuExtension.cpuLineRegex.exec(line);
+      const core = parseInt(match.groups.cpu_core, 10);
+      const user = parseFloat(match.groups.user);
+      const system = parseFloat(match.groups.system);
+      const nice = parseFloat(match.groups.nice);
+      const idle = parseFloat(match.groups.idle);
+      const ioWait = parseFloat(match.groups.io_wait);
+      const hardwareInterrupts = parseFloat(match.groups.hardware_interrupts);
+      const softwareInterrupts = parseFloat(match.groups.software_interrupts);
+      const steal = parseFloat(match.groups.steal);
+      tempUsage.all.usr += user;
+      tempUsage.all.sys += system;
+      tempUsage.all.nice += nice;
+      tempUsage.all.idle += idle;
+      tempUsage.all.ioWait += ioWait;
+      tempUsage.all.hardwareInterrupts += hardwareInterrupts;
+      tempUsage.all.softwareInterrupts += softwareInterrupts;
+      tempUsage.all.steal += steal;
+      tempUsage.cores.push({
+        core,
+        usr: user,
+        sys: system,
+        nice,
+        idle,
+        ioWait,
+        hardwareInterrupts,
+        softwareInterrupts,
+        steal,
+      });
+      SystemModuleCpuExtension.cpuLineRegex.lastIndex = 0;
     }
+
+    tempUsage.all.usr /= tempUsage.cores.length;
+    tempUsage.all.sys /= tempUsage.cores.length;
+    tempUsage.all.nice /= tempUsage.cores.length;
+    tempUsage.all.idle /= tempUsage.cores.length;
+    tempUsage.all.ioWait /= tempUsage.cores.length;
+    tempUsage.all.hardwareInterrupts /= tempUsage.cores.length;
+    tempUsage.all.softwareInterrupts /= tempUsage.cores.length;
+    tempUsage.all.steal /= tempUsage.cores.length;
+
+    return tempUsage as CPUUsage;
   }
 
   on_cpuUsage(listener: (newLoad: CPUUsage) => void, options?: ICpuUsageStreamOption): [() => void] {
@@ -120,7 +146,9 @@ export class SystemModuleCpuExtension<
     const refresh = options?.refresh ?? 1;
 
     const promise = this.instance.executor
-      .executeStream(`while [ 1 ]; do mpstat -P ALL 1 1 -o JSON | tr '\n' ' ' | xargs -0 echo; sleep ${refresh}; done`)
+      .executeStream(
+        `while [ 1 ]; do ${SystemModuleCpuExtension.cpuUsageCommand} | xargs -0 echo; sleep ${refresh}; done`
+      )
       .then(([eventEmitter, cancel, exitPromise]) => {
         cancelFunction = () => {
           cancel().finally(() => {
