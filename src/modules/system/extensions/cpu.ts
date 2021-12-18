@@ -62,7 +62,6 @@ export class SystemModuleCpuExtension<
 
   async usage(): Promise<CPUUsage> {
     const { code, stdout } = await this.instance.execute(SystemModuleCpuExtension.cpuUsageCommand);
-    console.log({ stdout });
     if (code !== 0) throw new Error('Got non-zero exit code while getting date');
 
     return SystemModuleCpuExtension.parseCpuUsageOutput(stdout);
