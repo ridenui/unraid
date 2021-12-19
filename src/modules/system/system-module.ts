@@ -2,6 +2,7 @@ import { mix } from 'ts-mixer';
 import { Executor } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
 import { EventExtension } from '../extension/event-extension';
+import { CPUUsage, ICpuUsageStreamOption, SystemModuleCpuExtension } from './extensions/cpu';
 import type { ILoadAverage, ILoadAverageStreamOption } from './extensions';
 import {
   SystemModuleDateExtension,
@@ -10,6 +11,7 @@ import {
   SystemModuleInfoExtension,
   SystemModuleLoadAverageExtension,
   SystemModuleLsblkExtension,
+  SystemModuleLscpuExtension,
   SystemModuleLsusbExtension,
   SystemModuleNtpExtension,
   SystemModuleSmartctlExtension,
@@ -17,7 +19,6 @@ import {
   SystemModuleUptimeExtension,
   SystemModuleUsersExtension,
 } from './extensions';
-import { CPUUsage, ICpuUsageStreamOption, SystemModuleCpuExtension } from './extensions/cpu';
 
 // required for mixins
 export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>>
@@ -36,6 +37,7 @@ export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig
     SystemModuleInfoExtension<ExecutorConfig, Ex>,
     SystemModuleLoadAverageExtension<ExecutorConfig, Ex>,
     SystemModuleLsblkExtension<ExecutorConfig, Ex>,
+    SystemModuleLscpuExtension<ExecutorConfig, Ex>,
     SystemModuleLsusbExtension<ExecutorConfig, Ex>,
     SystemModuleNtpExtension<ExecutorConfig, Ex>,
     SystemModuleSmartctlExtension<ExecutorConfig, Ex>,
@@ -54,6 +56,7 @@ export interface SystemModule<ExecutorConfig, Ex extends Executor<ExecutorConfig
   SystemModuleInfoExtension,
   SystemModuleLoadAverageExtension,
   SystemModuleLsblkExtension,
+  SystemModuleLscpuExtension,
   SystemModuleLsusbExtension,
   SystemModuleNtpExtension,
   SystemModuleSmartctlExtension,
