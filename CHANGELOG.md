@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/ridenui/unraid/compare/0.11.2...0.12.0) (2021-12-19)
+
+
+### Features
+
+* **system:** add lscpu ([#15](https://github.com/ridenui/unraid/issues/15)) ([5528f52](https://github.com/ridenui/unraid/commit/5528f52e07f214be74fa18b256debba16144c48a))
+
 ## [0.11.2](https://github.com/ridenui/unraid/compare/0.11.1...0.11.2) (2021-12-09)
 
 
