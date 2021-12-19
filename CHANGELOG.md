@@ -1,3 +1,10 @@
+## [0.12.1](https://github.com/ridenui/unraid/compare/0.12.0...0.12.1) (2021-12-19)
+
+
+### Bug Fixes
+
+* remove unnecessary console log ([ee3c911](https://github.com/ridenui/unraid/commit/ee3c9119a12d821bd77f290a67492e28c0d266f2))
+
 # [0.12.0](https://github.com/ridenui/unraid/compare/0.11.2...0.12.0) (2021-12-19)
 
 
