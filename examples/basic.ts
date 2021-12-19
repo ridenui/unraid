@@ -16,34 +16,9 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
     },
   } as UnraidConfig<SSHConfig, SSHExecutor>);
 
-  const hostname = await unraid.system.getHostname();
-
-  console.log(hostname);
-
-  const usage = await unraid.system.usage();
+  const usage = await unraid.system.lscpu();
 
   console.log(usage);
-
-  const [cancel] = unraid.system.on('syslog', (line) => {
-    console.log(`New line: ${line}`);
-  });
-
-  const [cancelLoad] = unraid.system.on('loadAverage', (load) => {
-    console.log(load);
-  });
-
-  const [cancelUsage] = unraid.system.on('cpuUsage', (currentUsage) => {
-    console.log(currentUsage);
-  });
-
-  await new Promise<void>((resolve) => {
-    setTimeout(() => {
-      cancel();
-      cancelLoad();
-      cancelUsage();
-      resolve();
-    }, 5000);
-  });
 
   unraid.executor.disconnect();
 })();

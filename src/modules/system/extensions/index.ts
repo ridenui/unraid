@@ -4,6 +4,7 @@ export * from './hostname';
 export * from './info';
 export * from './loadaverage';
 export * from './lsblk';
+export * from './lscpu';
 export * from './lsusb';
 export * from './ntp';
 export * from './smartctl';
