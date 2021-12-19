@@ -79,4 +79,13 @@ export class UnraidModuleNotificationExtension<
     );
     if (code !== 0) throw new Error('Got non-zero exit code while deleting notification');
   }
+
+  async toggleNotificationArchiveState(notificationName: string, isArchived: boolean): Promise<void> {
+    const { code } = await this.instance.execute(
+      `mv /tmp/notifications/${isArchived ? 'archive' : 'unread'}/${notificationName} /tmp/notifications/${
+        isArchived ? 'unread' : 'archive'
+      }/${notificationName}`
+    );
+    if (code !== 0) throw new Error('Got non-zero exit code while toggling archive state');
+  }
 }
