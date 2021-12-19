@@ -1,3 +1,10 @@
+## [0.12.2](https://github.com/ridenui/unraid/compare/0.12.1...0.12.2) (2021-12-19)
+
+
+### Bug Fixes
+
+* **notifications:** add archive state toggle ([cbe2d24](https://github.com/ridenui/unraid/commit/cbe2d24b6ff5cba13c5d365d124d45ac3f37cbe2))
+
 ## [0.12.1](https://github.com/ridenui/unraid/compare/0.12.0...0.12.1) (2021-12-19)
 
 
