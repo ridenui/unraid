@@ -12,6 +12,12 @@ export interface IUserScriptSchedule {
   [key: string]: IScheduleTask;
 }
 
+export interface IUserScript {
+  script: string | null;
+  description: string | null;
+  name: string | null;
+}
+
 export class UnraidModuleUserScriptsExtension<
   ExecutorConfig,
   Ex extends Executor<ExecutorConfig>
@@ -27,8 +33,7 @@ export class UnraidModuleUserScriptsExtension<
     return JSON.parse(stdout.join(''));
   }
 
-  async getUserScriptsScript(scriptName: string): Promise<any> {
-    console.log(scriptName);
+  async getUserScriptsScript(scriptName: string): Promise<IUserScript> {
     const scriptNameParts = scriptName.split('/');
     scriptNameParts.pop();
     const fileDirectory = scriptNameParts.join('/');
