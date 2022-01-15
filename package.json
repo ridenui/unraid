@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "ssh2": "^1.5.0",
-    "ts-mixer": "^6.0.0"
+    "ts-mixer": "^6.0.0",
+    "ts-toolbelt": "^9.6.0"
   },
   "peerDependencies": {
     "react-native-ssh-sftp": "^1.0.3"

@@ -1,5 +1,6 @@
 import { Executor } from '../../../instance/executor';
 import { UnraidModuleExtensionBase } from '../unraid-module-extension-base';
+import { UserScript } from './userscripts/user-script';
 
 export interface IScheduleTask {
   script: string;
@@ -33,19 +34,20 @@ export class UnraidModuleUserScriptsExtension<
     return JSON.parse(stdout.join(''));
   }
 
-  async getUserScriptsScript(scriptName: string): Promise<IUserScript> {
-    const scriptNameParts = scriptName.split('/');
-    scriptNameParts.pop();
-    const fallBackScriptName = () => scriptNameParts[scriptNameParts.length - 1] ?? null;
-    const fileDirectory = scriptNameParts.join('/');
-    const readDescriptionTask = this.instance.execute(`cat ${fileDirectory}/description`);
-    const readNameTask = this.instance.execute(`cat ${fileDirectory}/name`);
-    const readScriptTask = this.instance.execute(`cat ${fileDirectory}/script`);
-    const [description, name, script] = await Promise.all([readDescriptionTask, readNameTask, readScriptTask]);
-    return {
-      description: description.code === 0 ? description.stdout.join('') : null,
-      name: name.code === 0 ? name.stdout.join('') : fallBackScriptName(),
-      script: script.code === 0 ? script.stdout.join('') : null,
-    };
+  async getUserScripts(prePopulate = false): Promise<UserScript<ExecutorConfig>[]> {
+    const schedule = await this.getUserScriptSchedule();
+
+    const tasks = Object.keys(schedule).map((task) => {
+      const scriptLocation = schedule[task].script;
+      const scriptInstance = new UserScript(this.instance, schedule[task].id, scriptLocation, schedule[task].frequency);
+      return prePopulate
+        ? (async () => {
+            await scriptInstance.prePopulateCache();
+            return scriptInstance;
+          })()
+        : scriptInstance;
+    });
+
+    return Promise.all(tasks);
   }
 }
