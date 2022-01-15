@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 import { Client, ConnectConfig } from 'ssh2';
 import { executor as Executor } from '../instance';
+import { CommandQueue } from '../util/command-queue';
 
 export type SSHConfig = ConnectConfig;
 
@@ -8,6 +9,8 @@ export class SSHExecutor extends Executor.Executor<SSHConfig> {
   private connection: Client = new Client();
 
   private ready = false;
+
+  private commandQueue = new CommandQueue();
 
   connect(): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -33,7 +36,11 @@ export class SSHExecutor extends Executor.Executor<SSHConfig> {
 
   execute(command: Executor.IExecuteSimple | Executor.IExecute): Promise<Executor.IExecuteResult>;
 
-  async execute(command: Executor.IExecuteSimple | Executor.IExecute): Promise<Executor.IExecuteResult> {
+  execute(command: Executor.IExecuteSimple | Executor.IExecute): Promise<Executor.IExecuteResult> {
+    return this.commandQueue.doTask(() => this.executeSSH(command));
+  }
+
+  async executeSSH(command: Executor.IExecuteSimple | Executor.IExecute): Promise<Executor.IExecuteResult> {
     if (!this.ready) await this.connect();
     return new Promise((resolve, reject) => {
       if (typeof command === 'object') command = command.command;
@@ -87,7 +94,13 @@ export class SSHExecutor extends Executor.Executor<SSHConfig> {
     });
   }
 
-  async executeStream(
+  executeStream(
+    command: Executor.IExecuteSimple | Executor.IExecute
+  ): Promise<[EventEmitter, Executor.CancelFunction, Promise<Executor.IExecuteStreamResult>]> {
+    return this.commandQueue.doTask(() => this.executeStreamSSH(command));
+  }
+
+  async executeStreamSSH(
     command: Executor.IExecuteSimple | Executor.IExecute
   ): Promise<[EventEmitter, Executor.CancelFunction, Promise<Executor.IExecuteStreamResult>]> {
     if (!this.ready) await this.connect();

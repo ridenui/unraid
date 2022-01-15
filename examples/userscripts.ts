@@ -14,9 +14,13 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
 
   const schedule = await unraid.unraid.getUserScriptSchedule();
 
-  for (const task of Object.keys(schedule)) {
-    console.log(await unraid.unraid.getUserScriptsScript(task));
-  }
+  const tasks = Object.keys(schedule).map((task) => {
+    return unraid.unraid.getUserScriptsScript(task);
+  });
+
+  const result = await Promise.all(tasks);
+
+  console.log(result);
 
   unraid.executor.disconnect();
 })();
