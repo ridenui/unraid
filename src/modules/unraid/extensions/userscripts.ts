@@ -23,7 +23,7 @@ export class UnraidModuleUserScriptsExtension<
   Ex extends Executor<ExecutorConfig>
 > extends UnraidModuleExtensionBase<ExecutorConfig, Ex> {
   async hasUserScriptsInstalled(): Promise<boolean> {
-    const { code } = await this.instance.execute(`ls /boot/config/plugins/user.scripts`);
+    const { code } = await this.instance.execute(`test -f /boot/config/plugins/user.scripts.plg`);
     return code === 0;
   }
 
@@ -36,6 +36,7 @@ export class UnraidModuleUserScriptsExtension<
   async getUserScriptsScript(scriptName: string): Promise<IUserScript> {
     const scriptNameParts = scriptName.split('/');
     scriptNameParts.pop();
+    const fallBackScriptName = () => scriptNameParts[scriptNameParts.length - 1] ?? null;
     const fileDirectory = scriptNameParts.join('/');
     const readDescriptionTask = this.instance.execute(`cat ${fileDirectory}/description`);
     const readNameTask = this.instance.execute(`cat ${fileDirectory}/name`);
@@ -43,7 +44,7 @@ export class UnraidModuleUserScriptsExtension<
     const [description, name, script] = await Promise.all([readDescriptionTask, readNameTask, readScriptTask]);
     return {
       description: description.code === 0 ? description.stdout.join('') : null,
-      name: name.code === 0 ? name.stdout.join('') : null,
+      name: name.code === 0 ? name.stdout.join('') : fallBackScriptName(),
       script: script.code === 0 ? script.stdout.join('') : null,
     };
   }
