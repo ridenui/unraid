@@ -1,4 +1,3 @@
-import * as Process from 'process';
 import { Executor } from '../../../instance/executor';
 import { UnraidModuleExtensionBase } from '../unraid-module-extension-base';
 
@@ -12,6 +11,11 @@ export type RichNotification = {
   description: string;
   importance: NotificationImportance;
   isArchived: boolean;
+};
+
+export type NotificationCount = {
+  unread: number;
+  archived: number;
 };
 
 function parseNotificationLine(notification: string) {
@@ -42,35 +46,50 @@ export class UnraidModuleNotificationExtension<
    * Returns UNRAID Notifications sorted by date.
    */
   async getNotifications(): Promise<RichNotification[]> {
-    const { code: unreadCode, stdout: unreadOut } = await this.instance.execute(`ls -1 /tmp/notifications/unread/`);
-    const { code: archivedCode, stdout: archivedOut } = await this.instance.execute(
-      `ls -1 /tmp/notifications/archive/`
-    );
+    const [{ code: unreadCode, stdout: unreadOut }, { code: archivedCode, stdout: archivedOut }] = await Promise.all([
+      this.instance.execute(`ls -1 /tmp/notifications/unread/`),
+      this.instance.execute(`ls -1 /tmp/notifications/archive/`),
+    ]);
+
     if (archivedCode + unreadCode !== 0) throw new Error('Got non-zero exit code while listing notifications');
 
     const parsedNotifications: RichNotification[] = [];
 
-    /* eslint-disable no-restricted-syntax, no-await-in-loop */
-    for (const notification of unreadOut) {
-      const { code, stdout } = await this.instance.execute(`cat /tmp/notifications/unread/${notification}`);
-      if (code === 0) {
-        parsedNotifications.push(parseNotification(stdout, notification, false));
-      }
-    }
+    const loadNotifications = (sources: string[], isArchived: boolean) => {
+      return Promise.all(
+        sources.map((source) =>
+          (async () => {
+            const { code, stdout } = await this.instance.execute(`cat /tmp/notifications/unread/${source}`);
+            if (code === 0) {
+              parsedNotifications.push(parseNotification(stdout, source, isArchived));
+            }
+          })()
+        )
+      );
+    };
 
-    for (const notification of archivedOut) {
-      const { code, stdout } = await this.instance.execute(`cat /tmp/notifications/archive/${notification}`);
-      if (code === 0) {
-        parsedNotifications.push(parseNotification(stdout, notification, true));
-      }
-    }
-    /* eslint-enable no-restricted-syntax, no-await-in-loop */
+    await Promise.all([loadNotifications(unreadOut, false), loadNotifications(archivedOut, true)]);
 
     return parsedNotifications.sort((a, b) => {
       if (a.created < b.created) return -1;
       if (a.created > b.created) return 1;
       return 0;
     });
+  }
+
+  /**
+   * Returns UNRAID Notification count.
+   */
+  async getNotificationCount(): Promise<NotificationCount> {
+    const [{ code: unreadCode, stdout: unreadOut }, { code: archivedCode, stdout: archivedOut }] = await Promise.all([
+      this.instance.execute(`ls -1 /tmp/notifications/unread/`),
+      this.instance.execute(`ls -1 /tmp/notifications/archive/`),
+    ]);
+
+    return {
+      archived: archivedCode === 0 ? archivedOut.length : 0,
+      unread: unreadCode === 0 ? unreadOut.length : 0,
+    };
   }
 
   async deleteNotification(notificationName: string, isArchived: boolean): Promise<void> {
