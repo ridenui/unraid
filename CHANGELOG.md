@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/ridenui/unraid/compare/0.12.4...0.13.0) (2022-01-17)
+
+
+### Features
+
+* **user.scripts:** add userscripts module ([#17](https://github.com/ridenui/unraid/issues/17)) ([9754aed](https://github.com/ridenui/unraid/commit/9754aed3d93294d52eb6b6f70d6f799c5dc27cd5))
+
 ## [0.12.4](https://github.com/ridenui/unraid/compare/0.12.3...0.12.4) (2022-01-17)
 
 
