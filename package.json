@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "ssh2": "^1.5.0",
-    "ts-mixer": "^6.0.0"
+    "ts-mixer": "^6.0.0",
+    "ts-toolbelt": "^9.6.0"
   },
   "peerDependencies": {
     "react-native-ssh-sftp": "^1.0.3"
@@ -37,7 +38,8 @@
   "scripts": {
     "release": "release-it",
     "example:basic": "ts-node -r dotenv/config examples/basic.ts",
-    "example:notifications": "ts-node -r dotenv/config examples/notification_test.ts"
+    "example:notifications": "ts-node -r dotenv/config examples/notification_test.ts",
+    "example:userscripts": "ts-node -r dotenv/config examples/userscripts.ts"
   },
   "publishConfig": {
     "access": "public",
