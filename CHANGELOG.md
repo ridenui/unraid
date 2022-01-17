@@ -1,3 +1,10 @@
+## [0.12.4](https://github.com/ridenui/unraid/compare/0.12.3...0.12.4) (2022-01-17)
+
+
+### Bug Fixes
+
+* **notifications:** read archived notifications from the correct source directory ([#18](https://github.com/ridenui/unraid/issues/18)) ([2f22841](https://github.com/ridenui/unraid/commit/2f228412639a7301731a66301606a426c22970f3))
+
 ## [0.12.3](https://github.com/ridenui/unraid/compare/0.12.2...0.12.3) (2022-01-15)
 
 ## [0.12.2](https://github.com/ridenui/unraid/compare/0.12.1...0.12.2) (2021-12-19)
