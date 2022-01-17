@@ -59,7 +59,10 @@ export class UnraidModuleNotificationExtension<
       return Promise.all(
         sources.map((source) =>
           (async () => {
-            const { code, stdout } = await this.instance.execute(`cat /tmp/notifications/unread/${source}`);
+            const notificationType = isArchived ? 'archive' : 'unread';
+            const { code, stdout } = await this.instance.execute(
+              `cat /tmp/notifications/${notificationType}/${source}`
+            );
             if (code === 0) {
               parsedNotifications.push(parseNotification(stdout, source, isArchived));
             }
