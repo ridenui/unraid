@@ -8,6 +8,11 @@ export interface UnraidConfig<
   ExecutorConfig extends ExecutorConfigType = ExecutorConfigType,
   Ex extends Executor = Executor<ExecutorConfig>
 > {
+  /**
+   * Specify which {@link Executor} to use.
+   * For nodejs use the builtin {@link SSHExecutor} which uses [ssh2](https://github.com/mscdex/ssh2) under the hood.
+   * You can also provide a custom {@link Executor} implementation.
+   */
   executor: Type<Ex>;
   executorConfig: PropType<Ex, 'config'>;
 }
@@ -21,10 +26,27 @@ export class Unraid<
    */
   readonly executor: Ex;
 
+  /**
+   * If you want to interact with virtual machines on unraid, use this
+   *
+   * @category VM
+   */
   readonly vm: VMModule;
 
+  /**
+   * Everything general system related
+   * These methods are more unraid independent and may also work on other systems
+   * Basically general unix system functions
+   *
+   * @category System
+   */
   readonly system: SystemModule;
 
+  /**
+   * Unraid specific functions
+   *
+   * @category Unraid
+   */
   readonly unraid: UnraidModule;
 
   constructor(config: UnraidConfig<ExecutorConfig, Ex>) {
@@ -36,17 +58,17 @@ export class Unraid<
   }
 
   /**
-   * @private
+   * @ignore
    */
   async execute(command: IExecuteSimple): Promise<IExecuteResult>;
 
   /**
-   * @private
+   * @ignore
    */
   async execute({ command }: IExecute): Promise<IExecuteResult>;
 
   /**
-   * @private
+   * @ignore
    */
   async execute(command: IExecuteSimple | IExecute): Promise<IExecuteResult> {
     return this.executor.execute(command);
