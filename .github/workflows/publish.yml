@@ -10,6 +10,7 @@ jobs:
     name: Publish docs
     runs-on: ubuntu-20.04
     if: "startsWith(github.event.head_commit.message, 'chore(release): ')"
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
         with:
@@ -48,6 +49,7 @@ jobs:
     name: Building & Publish
     runs-on: ubuntu-20.04
     if: "!startsWith(github.event.head_commit.message, 'chore(release): ')"
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
         with:
