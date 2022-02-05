@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 export type IInfoResult = {
@@ -7,10 +6,7 @@ export type IInfoResult = {
   version: string;
 };
 
-export class SystemModuleInfoExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleInfoExtension extends SystemModuleExtensionBase {
   /**
    * Returns current System info like manufacturer, productname and also the version
    */

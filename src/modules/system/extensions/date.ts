@@ -1,10 +1,6 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
-export class SystemModuleDateExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleDateExtension extends SystemModuleExtensionBase {
   async date(parsed?: false): Promise<string>;
 
   async date(parsed?: true): Promise<Date>;

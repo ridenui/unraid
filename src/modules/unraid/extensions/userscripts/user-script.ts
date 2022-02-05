@@ -1,5 +1,4 @@
 import type { Union } from 'ts-toolbelt';
-import { Executor } from '../../../../instance/executor';
 import { Unraid } from '../../../../instance/unraid';
 
 type CacheState<Value> = {
@@ -16,8 +15,8 @@ type CacheDictionary<Keys extends string = CachedProperties['name']> = {
   [key in Keys]: CacheState<Union.Select<CachedProperties, { name: key }>['value']>;
 };
 
-export class UserScript<ExecutorConfig, Ex extends Executor<ExecutorConfig> = Executor<ExecutorConfig>> {
-  private readonly instance: Unraid<ExecutorConfig, Ex>;
+export class UserScript {
+  private readonly instance: Unraid;
 
   public readonly id: string;
 
@@ -39,7 +38,7 @@ export class UserScript<ExecutorConfig, Ex extends Executor<ExecutorConfig> = Ex
     },
   };
 
-  constructor(instance: Unraid<ExecutorConfig, Ex>, id: string, scriptLocation: string, frequency: string) {
+  constructor(instance: Unraid, id: string, scriptLocation: string, frequency: string) {
     this.id = id;
     this.scriptLocation = scriptLocation;
     this.frequency = frequency;

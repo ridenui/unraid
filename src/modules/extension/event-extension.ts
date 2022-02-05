@@ -1,7 +1,5 @@
-import { Executor } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
-
-export type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
+import { PropType } from '../../util';
 
 export type EventTypeSchemaType<HT = unknown, OT = unknown> = {
   [key: string]: {
@@ -10,14 +8,10 @@ export type EventTypeSchemaType<HT = unknown, OT = unknown> = {
   };
 };
 
-export class EventExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>,
-  EventTypeSchema extends EventTypeSchemaType
-> {
-  readonly instance: Unraid<ExecutorConfig, Ex>;
+export class EventExtension<EventTypeSchema extends EventTypeSchemaType = EventTypeSchemaType> {
+  readonly instance: Unraid;
 
-  constructor(instance: Unraid<ExecutorConfig, Ex>) {
+  constructor(instance: Unraid) {
     this.instance = instance;
   }
 

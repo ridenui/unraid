@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 export type ILoadAverage = {
@@ -22,10 +21,7 @@ export type ILoadAverageStreamOption = {
   refresh?: number;
 };
 
-export class SystemModuleLoadAverageExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleLoadAverageExtension extends SystemModuleExtensionBase {
   async loadAverage(): Promise<ILoadAverage> {
     const { code, stdout } = await this.instance.execute('cat /proc/loadavg');
     if (code !== 0) throw new Error('Got non-zero exit code while getting loadaverage');

@@ -1,10 +1,6 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
-export class SystemModuleNtpExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleNtpExtension extends SystemModuleExtensionBase {
   async ntp(): Promise<string[]> {
     const { code, stdout } = await this.instance.execute('cat /etc/ntp.conf | grep server');
     if (code !== 0) throw new Error('Got non-zero exit code while listing ntpservers');

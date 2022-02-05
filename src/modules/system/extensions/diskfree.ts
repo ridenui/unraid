@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 export interface IDiskFreeReturn {
@@ -9,10 +8,7 @@ export interface IDiskFreeReturn {
   mounted: string;
 }
 
-export class SystemModuleDiskfree<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleDiskfree extends SystemModuleExtensionBase {
   /**
    * Returns the current disk free stats
    */

@@ -1,10 +1,9 @@
-import { Executor } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
 
-export class SystemModuleExtensionBase<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
-  readonly instance: Unraid<ExecutorConfig, Ex>;
+export class SystemModuleExtensionBase {
+  readonly instance: Unraid;
 
-  constructor(instance: Unraid<ExecutorConfig, Ex>) {
+  constructor(instance: Unraid) {
     this.instance = instance;
   }
 }

@@ -14,7 +14,7 @@ import { Unraid, UnraidConfig } from '../src/instance/unraid';
       username: process.env.SSH_USER,
       port: parseInt(process.env.SSH_PORT ?? '22', 10),
     },
-  } as UnraidConfig<SSHConfig, SSHExecutor>);
+  });
 
   const hostname = await unraid.system.getHostname();
 

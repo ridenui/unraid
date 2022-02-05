@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { UnraidModuleExtensionBase } from '../unraid-module-extension-base';
 
 type NotificationImportance = 'alert' | 'warning' | 'normal';
@@ -38,10 +37,7 @@ function parseNotification(notificationFile: string[], fileName: string, isArchi
   };
 }
 
-export class UnraidModuleNotificationExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends UnraidModuleExtensionBase<ExecutorConfig, Ex> {
+export class UnraidModuleNotificationExtension extends UnraidModuleExtensionBase {
   /**
    * Returns UNRAID Notifications sorted by date.
    */

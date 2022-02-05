@@ -1,15 +1,14 @@
-import { Executor } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
 import { VM, VMState } from './vm';
 
-export class VMModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
-  private readonly instance: Unraid<ExecutorConfig, Ex>;
+export class VMModule {
+  private readonly instance: Unraid;
 
-  constructor(instance: Unraid<ExecutorConfig, Ex>) {
+  constructor(instance: Unraid) {
     this.instance = instance;
   }
 
-  async list(): Promise<VM<ExecutorConfig, Ex>[]> {
+  async list(): Promise<VM[]> {
     const { stdout, code } = await this.instance.execute('virsh list --all');
     if (code !== 0) throw new Error('Got non-zero exit code while listing vms');
     const vms = stdout.slice(2);

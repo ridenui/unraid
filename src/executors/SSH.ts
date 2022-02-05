@@ -1,10 +1,15 @@
 import { EventEmitter } from 'events';
 import { Client, ConnectConfig } from 'ssh2';
 import { executor as Executor } from '../instance';
+import { ExecutorConfigType } from '../instance/executor';
 import { CommandQueue } from '../util/command-queue';
 
-export type SSHConfig = ConnectConfig;
+export type SSHConfig = ConnectConfig & ExecutorConfigType;
 
+/**
+ * SSHExecutor built for the usage with nodejs.
+ * Under the hood it uses [ssh2](https://github.com/mscdex/ssh2)
+ */
 export class SSHExecutor extends Executor.Executor<SSHConfig> {
   private connection: Client = new Client();
 

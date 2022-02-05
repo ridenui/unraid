@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { UnraidModuleExtensionBase } from '../unraid-module-extension-base';
 
 export type IdentConfig = {
@@ -47,10 +46,7 @@ function snakeToCamel(input: string): string {
   return partsWithUpperCase.join('');
 }
 
-export class UnraidModuleIdentConfigExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends UnraidModuleExtensionBase<ExecutorConfig, Ex> {
+export class UnraidModuleIdentConfigExtension extends UnraidModuleExtensionBase {
   /**
    * Returns /boot/config/ident.cfg as parsed JSON
    */

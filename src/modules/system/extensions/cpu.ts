@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import type { RecursivePartial } from '../../../util/type';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
@@ -51,10 +50,7 @@ export type ICpuUsageStreamOption = {
   refresh?: number;
 };
 
-export class SystemModuleCpuExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleCpuExtension extends SystemModuleExtensionBase {
   private static cpuUsageCommand = `TERM=xterm top -1 -n 1 -b | grep '^%Cpu[[:digit:]+]' | tr '\n' '|'`;
 
   private static cpuLineRegex =
