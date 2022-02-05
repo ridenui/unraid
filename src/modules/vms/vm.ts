@@ -1,4 +1,3 @@
-import { Executor } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
 
 export enum VMState {
@@ -19,8 +18,8 @@ export type IVMRawReturn = {
   raw: string[];
 };
 
-export class VM<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
-  private readonly instance: Unraid<ExecutorConfig, Ex>;
+export class VM {
+  private readonly instance: Unraid;
 
   readonly name: string;
 
@@ -28,7 +27,7 @@ export class VM<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
 
   id?: string;
 
-  constructor(instance: Unraid<ExecutorConfig, Ex>, name: string, state: VMState, id?: string) {
+  constructor(instance: Unraid, name: string, state: VMState, id?: string) {
     this.instance = instance;
     this.name = name;
     this.state = state;

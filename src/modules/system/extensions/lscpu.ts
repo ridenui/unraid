@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 export type ILscpuResult = Record<string, string>;
@@ -12,10 +11,7 @@ function convertFieldsToKeys(fields: Record<string, string>[]): Record<string, s
   return result;
 }
 
-export class SystemModuleLscpuExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleLscpuExtension extends SystemModuleExtensionBase {
   /**
    * Get Processor Information
    */

@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 const regex = /(.*):(.*):(.*):(.*):(.*):(.*):(.*)/g;
@@ -14,10 +13,7 @@ export type IUsersResult = {
   shell: string;
 };
 
-export class SystemModuleUsersExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleUsersExtension extends SystemModuleExtensionBase {
   async users(): Promise<IUsersResult[]> {
     const { code, stdout } = await this.instance.execute('cat /etc/passwd');
     if (code !== 0) throw new Error('Got non-zero exit code while listing users');

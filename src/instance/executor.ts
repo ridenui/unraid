@@ -20,6 +20,8 @@ export type IExecuteSimple = string;
 
 export type CancelFunction = () => Promise<void>;
 
+export type ExecutorConfigType = Record<string, unknown>;
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface Executor<Config> {
   executeStream?(
@@ -27,7 +29,7 @@ export interface Executor<Config> {
   ): Promise<[EventEmitter, CancelFunction, Promise<IExecuteStreamResult>]>;
 }
 
-export abstract class Executor<Config> {
+export abstract class Executor<Config extends ExecutorConfigType = ExecutorConfigType> {
   readonly config: Config;
 
   constructor(config: Config) {

@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 type ISmartctl = {
@@ -6,10 +5,7 @@ type ISmartctl = {
   all: boolean;
 };
 
-export class SystemModuleSmartctlExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleSmartctlExtension extends SystemModuleExtensionBase {
   /**
    * List smart information for specified device
    * @example Get information for device /dev/sda1

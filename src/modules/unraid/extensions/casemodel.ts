@@ -1,10 +1,6 @@
-import { Executor } from '../../../instance/executor';
 import { UnraidModuleExtensionBase } from '../unraid-module-extension-base';
 
-export class UnraidModuleCaseModelExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends UnraidModuleExtensionBase<ExecutorConfig, Ex> {
+export class UnraidModuleCaseModelExtension extends UnraidModuleExtensionBase {
   async getCaseModel(): Promise<string> {
     const { code, stdout } = await this.instance.execute(`cat /boot/config/plugins/dynamix/case-model.cfg`);
     if (code !== 0) throw new Error('Got non-zero exit code while getting case-model');

@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 const regex = /Bus\s(\d*)\sDevice\s(\d*): ID\s(.*):(.*?)\s(.*)/g;
@@ -12,10 +11,7 @@ export type ILsusbResult = {
   productName: string;
 };
 
-export class SystemModuleLsusbExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleLsusbExtension extends SystemModuleExtensionBase {
   /**
    * List all usb devices
    * @example Get usb devices

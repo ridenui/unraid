@@ -1,14 +1,10 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 export type ILsblk = {
   all?: boolean;
 };
 
-export class SystemModuleLsblkExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleLsblkExtension extends SystemModuleExtensionBase {
   /**
    * List all block devices
    * @param all - toggles `--all` flag in `lsblk`

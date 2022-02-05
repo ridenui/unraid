@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { SystemModuleExtensionBase } from '../system-module-extension-base';
 
 export type IUptime = {
@@ -6,10 +5,7 @@ export type IUptime = {
   upSince: Date;
 };
 
-export class SystemModuleUptimeExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends SystemModuleExtensionBase<ExecutorConfig, Ex> {
+export class SystemModuleUptimeExtension extends SystemModuleExtensionBase {
   async uptime(): Promise<IUptime> {
     const { code, stdout } = await this.instance.execute('uptime -s');
     if (code !== 0) throw new Error('Got non-zero exit code while getting  uptime');

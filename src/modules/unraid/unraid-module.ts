@@ -1,5 +1,4 @@
 import { mix } from 'ts-mixer';
-import { Executor } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
 import {
   UnraidModuleCaseModelExtension,
@@ -9,12 +8,15 @@ import {
 } from './extensions';
 
 // required for mixins
-export interface UnraidModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>>
-  extends UnraidModuleNotificationExtension<ExecutorConfig, Ex>,
-    UnraidModuleIdentConfigExtension<ExecutorConfig, Ex>,
-    UnraidModuleUserScriptsExtension<ExecutorConfig, Ex>,
-    UnraidModuleCaseModelExtension<ExecutorConfig, Ex> {
-  instance: Unraid<ExecutorConfig, Ex>;
+export interface UnraidModule
+  extends UnraidModuleNotificationExtension,
+    UnraidModuleIdentConfigExtension,
+    UnraidModuleUserScriptsExtension,
+    UnraidModuleCaseModelExtension {
+  /**
+   * @private
+   */
+  instance: Unraid;
 }
 
 @mix(
@@ -23,10 +25,10 @@ export interface UnraidModule<ExecutorConfig, Ex extends Executor<ExecutorConfig
   UnraidModuleIdentConfigExtension,
   UnraidModuleUserScriptsExtension
 )
-export class UnraidModule<ExecutorConfig, Ex extends Executor<ExecutorConfig>> {
-  instance: Unraid<ExecutorConfig, Ex>;
+export class UnraidModule {
+  instance: Unraid;
 
-  constructor(instance: Unraid<ExecutorConfig, Ex>) {
+  constructor(instance: Unraid) {
     this.instance = instance;
   }
 }

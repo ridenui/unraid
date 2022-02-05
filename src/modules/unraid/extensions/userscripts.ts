@@ -1,4 +1,3 @@
-import { Executor } from '../../../instance/executor';
 import { UnraidModuleExtensionBase } from '../unraid-module-extension-base';
 import { UserScript } from './userscripts/user-script';
 
@@ -19,10 +18,7 @@ export interface IUserScript {
   name: string | null;
 }
 
-export class UnraidModuleUserScriptsExtension<
-  ExecutorConfig,
-  Ex extends Executor<ExecutorConfig>
-> extends UnraidModuleExtensionBase<ExecutorConfig, Ex> {
+export class UnraidModuleUserScriptsExtension extends UnraidModuleExtensionBase {
   async hasUserScriptsInstalled(): Promise<boolean> {
     const { code } = await this.instance.execute(`test -f /boot/config/plugins/user.scripts.plg`);
     return code === 0;
@@ -34,7 +30,7 @@ export class UnraidModuleUserScriptsExtension<
     return JSON.parse(stdout.join(''));
   }
 
-  async getUserScripts(prePopulate = false): Promise<UserScript<ExecutorConfig>[]> {
+  async getUserScripts(prePopulate = false): Promise<UserScript[]> {
     const schedule = await this.getUserScriptSchedule();
 
     const tasks = Object.keys(schedule).map((task) => {
