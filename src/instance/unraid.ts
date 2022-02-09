@@ -1,3 +1,4 @@
+import { DockerModule } from '../modules/docker/docker-module';
 import { SystemModule } from '../modules/system/system-module';
 import { UnraidModule } from '../modules/unraid/unraid-module';
 import { VMModule } from '../modules/vms/vm-module';
@@ -34,6 +35,13 @@ export class Unraid<
   readonly vm: VMModule;
 
   /**
+   * If you want to interact with docker containers on unraid, use this
+   *
+   * @category Docker
+   */
+  readonly docker: DockerModule;
+
+  /**
    * Everything general system related
    * These methods are more unraid independent and may also work on other systems
    * Basically general unix system functions
@@ -53,6 +61,7 @@ export class Unraid<
     const ExecutorClass = config.executor;
     this.executor = new ExecutorClass(config.executorConfig);
     this.vm = new VMModule(this);
+    this.docker = new DockerModule(this);
     this.system = new SystemModule(this);
     this.unraid = new UnraidModule(this);
   }
