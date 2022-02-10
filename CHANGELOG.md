@@ -1,3 +1,10 @@
+# [0.15.0](https://github.com/ridenui/unraid/compare/0.14.0...0.15.0) (2022-02-10)
+
+
+### Features
+
+* load docker container icons ([#21](https://github.com/ridenui/unraid/issues/21)) ([5d324e6](https://github.com/ridenui/unraid/commit/5d324e67dca2f2cfaf7e5df567c516a9496e1b1f))
+
 # [0.14.0](https://github.com/ridenui/unraid/compare/0.13.1...0.14.0) (2022-02-10)
 
 
