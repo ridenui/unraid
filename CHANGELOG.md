@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/ridenui/unraid/compare/0.13.1...0.14.0) (2022-02-10)
+
+
+### Features
+
+* add docker module ([#20](https://github.com/ridenui/unraid/issues/20)) ([5f2b9fb](https://github.com/ridenui/unraid/commit/5f2b9fb2609348aaf4120dd46d922b2411269b64))
+
 ## [0.13.1](https://github.com/ridenui/unraid/compare/0.13.0...0.13.1) (2022-02-05)
 
 # [0.13.0](https://github.com/ridenui/unraid/compare/0.12.4...0.13.0) (2022-01-17)
