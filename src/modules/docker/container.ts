@@ -1,32 +1,43 @@
 import { Unraid } from '../../instance/unraid';
-import { Container as ContainerType } from './docker.types';
+import { ContainerStates, RawContainer } from './docker.types';
+
+const questionIconLocation = '/usr/local/emhttp/plugins/dynamix.docker.manager/images/question.png';
 
 export class Container {
   private readonly instance: Unraid;
 
   readonly id: string;
 
-  readonly data: ContainerType;
+  readonly data: RawContainer;
 
-  constructor(instance: Unraid, data: ContainerType) {
+  constructor(instance: Unraid, data: RawContainer) {
     this.instance = instance;
     this.data = data;
     this.id = data.Id;
   }
 
-  get name() {
+  get name(): string {
     return this.data.Names[0].replace('/', '');
   }
 
-  get imageUrl() {
-    return `/state/plugins/dynamix.docker.manager/images/${this.name}-icon.png`;
+  /**
+   * Returns the container image as base64 encoded image. Falls back to the default question logo in case no icon is found
+   */
+  async getImage(): Promise<string> {
+    const filePath = `/var/lib/docker/unraid/images/${this.name}-icon.png`;
+    const { stdout, stderr, code } = await this.instance.execute(
+      `[ -f ${filePath} ] && base64 ${filePath} || base64 ${questionIconLocation}`
+    );
+    if (code !== 0)
+      throw new Error(`Unable to read image for container ${this.id} / ${this.name}.\n${stdout}\n${stderr}`);
+    return stdout.join('');
   }
 
-  get state() {
+  get state(): ContainerStates {
     return this.data.State;
   }
 
-  get created() {
+  get created(): Date {
     return new Date(this.data.Created * 1000);
   }
 

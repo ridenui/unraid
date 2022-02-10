@@ -3,3 +3,4 @@ import { Unraid } from './instance/unraid';
 
 export * as IExecutor from './instance/executor';
 export { Executor, Unraid };
+export * from './modules/docker/docker.types';
