@@ -1,7 +1,7 @@
 import { IExecuteResult } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
 import { Container } from './container';
-import { Container as ContainerType } from './docker.types';
+import { RawContainer } from './docker.types';
 
 export class DockerModule {
   private readonly instance: Unraid;
@@ -17,7 +17,7 @@ export class DockerModule {
   async list(): Promise<Container[]> {
     const { stdout, code } = await this.fetch('http://localhost/v1.41/containers/json');
     if (code !== 0) throw new Error('Got non-zero exit code while listing containers');
-    const json: ContainerType[] = JSON.parse(stdout[0]);
+    const json: RawContainer[] = JSON.parse(stdout[0]);
     return json.map((container) => new Container(this.instance, container));
   }
 }

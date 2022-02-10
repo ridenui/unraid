@@ -18,7 +18,7 @@ export type Port = {
   type: 'tcp' | 'udp';
 };
 
-export type Container = {
+export type RawContainer = {
   Id: string;
   Names: string[];
   Image: string;
