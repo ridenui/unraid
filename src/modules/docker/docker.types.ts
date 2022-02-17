@@ -1,5 +1,6 @@
 export enum ContainerStates {
   RUNNING = 'running',
+  EXITED = 'exited',
 }
 
 export type Mount = {

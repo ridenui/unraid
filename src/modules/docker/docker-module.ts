@@ -15,7 +15,7 @@ export class DockerModule {
   }
 
   async list(): Promise<Container[]> {
-    const { stdout, code } = await this.fetch('http://localhost/v1.41/containers/json');
+    const { stdout, code } = await this.fetch('http://localhost/v1.41/containers/json?all=1');
     if (code !== 0) throw new Error('Got non-zero exit code while listing containers');
     const json: RawContainer[] = JSON.parse(stdout[0]);
     return json.map((container) => new Container(this.instance, container));
