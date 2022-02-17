@@ -1,3 +1,10 @@
+## [0.15.2](https://github.com/ridenui/unraid/compare/0.15.1...0.15.2) (2022-02-17)
+
+
+### Bug Fixes
+
+* **docker:** load all containers ([f110456](https://github.com/ridenui/unraid/commit/f11045605e56ae84263d5864f0308d82be455fea))
+
 ## [0.15.1](https://github.com/ridenui/unraid/compare/0.15.0...0.15.1) (2022-02-15)
 
 # [0.15.0](https://github.com/ridenui/unraid/compare/0.14.0...0.15.0) (2022-02-10)
