@@ -10,6 +10,8 @@ export class Container {
 
   readonly data: RawContainer;
 
+  private image: string | undefined;
+
   constructor(instance: Unraid, data: RawContainer) {
     this.instance = instance;
     this.data = data;
@@ -24,13 +26,16 @@ export class Container {
    * Returns the container image as base64 encoded image. Falls back to the default question logo in case no icon is found
    */
   async getImage(): Promise<string> {
+    if (this.image) return this.image;
     const filePath = `/var/lib/docker/unraid/images/${this.name}-icon.png`;
     const { stdout, stderr, code } = await this.instance.execute(
       `[ -f ${filePath} ] && base64 ${filePath} || base64 ${questionIconLocation}`
     );
     if (code !== 0)
       throw new Error(`Unable to read image for container ${this.id} / ${this.name}.\n${stdout}\n${stderr}`);
-    return stdout.join('');
+    const image = stdout.join('');
+    this.image = image;
+    return image;
   }
 
   get state(): ContainerStates {
