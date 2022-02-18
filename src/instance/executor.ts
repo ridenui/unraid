@@ -1,19 +1,19 @@
 import type { EventEmitter } from 'events';
 
 export type IExecute = {
-  command: string;
+    command: string;
 };
 
 export type IExecuteResult = {
-  stdout: string[];
-  stderr: string[];
-  code: number;
-  signal?: unknown;
+    stdout: string[];
+    stderr: string[];
+    code: number;
+    signal?: unknown;
 };
 
 export type IExecuteStreamResult = {
-  code: number;
-  signal?: unknown;
+    code: number;
+    signal?: unknown;
 };
 
 export type IExecuteSimple = string;
@@ -24,21 +24,21 @@ export type ExecutorConfigType = Record<string, unknown>;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface Executor<Config> {
-  executeStream?(
-    command: IExecuteSimple | IExecute
-  ): Promise<[EventEmitter, CancelFunction, Promise<IExecuteStreamResult>]>;
+    executeStream?(
+        command: IExecuteSimple | IExecute
+    ): Promise<[EventEmitter, CancelFunction, Promise<IExecuteStreamResult>]>;
 }
 
 export abstract class Executor<Config extends ExecutorConfigType = ExecutorConfigType> {
-  readonly config: Config;
+    readonly config: Config;
 
-  constructor(config: Config) {
-    this.config = config;
-  }
+    constructor(config: Config) {
+        this.config = config;
+    }
 
-  abstract execute(command: IExecuteSimple): Promise<IExecuteResult>;
+    abstract execute(command: IExecuteSimple): Promise<IExecuteResult>;
 
-  abstract execute({ command }: IExecute): Promise<IExecuteResult>;
+    abstract execute({ command }: IExecute): Promise<IExecuteResult>;
 
-  abstract execute(command: IExecuteSimple | IExecute): Promise<IExecuteResult>;
+    abstract execute(command: IExecuteSimple | IExecute): Promise<IExecuteResult>;
 }

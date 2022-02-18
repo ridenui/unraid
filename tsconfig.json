@@ -1,10 +1,10 @@
 {
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "module": "commonjs",
-    "target": "es5",
-    "outDir": "dist",
-    "declaration": true
-  },
-  "exclude": ["node_modules", "examples", "dist"]
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "es5",
+        "outDir": "dist",
+        "declaration": true
+    },
+    "exclude": ["node_modules", "examples", "dist"]
 }
