@@ -1,3 +1,10 @@
+## [0.15.4](https://github.com/ridenui/unraid/compare/0.15.3...0.15.4) (2022-02-18)
+
+
+### Bug Fixes
+
+* **docker:** add image checksums to enable caching ([#24](https://github.com/ridenui/unraid/issues/24)) ([266d1e0](https://github.com/ridenui/unraid/commit/266d1e09bbccd899c27082f0498e6ffed438acb8))
+
 ## [0.15.3](https://github.com/ridenui/unraid/compare/0.15.2...0.15.3) (2022-02-17)
 
 
