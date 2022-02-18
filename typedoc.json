@@ -1,12 +1,10 @@
 {
-  "name": "Unraid API Client",
-  "entryPoints": ["./src/instance/unraid.ts", "./src/executors/", "./src/instance/executor.ts", "./src/modules/"],
-  "entryPointStrategy": "Expand",
-  "out": "docs",
-  "theme": "default",
-  "includeVersion": true,
-  "excludePrivate": true,
-  "plugin": [
-    "typedoc-plugin-merge-modules"
-  ]
+    "name": "Unraid API Client",
+    "entryPoints": ["./src/instance/unraid.ts", "./src/executors/", "./src/instance/executor.ts", "./src/modules/"],
+    "entryPointStrategy": "Expand",
+    "out": "docs",
+    "theme": "default",
+    "includeVersion": true,
+    "excludePrivate": true,
+    "plugin": ["typedoc-plugin-merge-modules"]
 }
