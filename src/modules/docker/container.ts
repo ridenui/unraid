@@ -3,6 +3,13 @@ import { ContainerStates, RawContainer } from './docker.types';
 
 const questionIconLocation = '/usr/local/emhttp/plugins/dynamix.docker.manager/images/question.png';
 
+export type ContainerImage = {
+  /** base64 encoded string of the image */
+  encoded: string;
+  /** SHA512 checksum of the *encoded* image */
+  checksum: string;
+};
+
 export class Container {
   private readonly instance: Unraid;
 
@@ -10,7 +17,7 @@ export class Container {
 
   readonly data: RawContainer;
 
-  private image: string | undefined;
+  private image: ContainerImage | undefined;
 
   constructor(instance: Unraid, data: RawContainer) {
     this.instance = instance;
@@ -22,20 +29,45 @@ export class Container {
     return this.data.Names[0].replace('/', '');
   }
 
+  private get imagePath(): string {
+    return `/var/lib/docker/unraid/images/${this.name}-icon.png`;
+  }
+
   /**
-   * Returns the container image as base64 encoded image. Falls back to the default question logo in case no icon is found
+   * Returns the container image as base64 encoded image and it's SHA512 hash. Falls back to the default question logo in case no icon is found.
    */
-  async getImage(): Promise<string> {
-    if (this.image) return this.image;
-    const filePath = `/var/lib/docker/unraid/images/${this.name}-icon.png`;
+  async getImage(ignoreCache?: boolean): Promise<ContainerImage> {
+    if (this.image && !ignoreCache) return this.image;
+    const filePath = this.imagePath;
     const { stdout, stderr, code } = await this.instance.execute(
-      `[ -f ${filePath} ] && base64 ${filePath} || base64 ${questionIconLocation}`
+      `[ -f ${filePath} ] && (base64 ${filePath} && base64 -w 0 ${filePath} | sha512sum) || (base64 ${questionIconLocation} && base64 -w 0 ${questionIconLocation} | sha512sum)`
     );
     if (code !== 0)
       throw new Error(`Unable to read image for container ${this.id} / ${this.name}.\n${stdout}\n${stderr}`);
+    const checksum = stdout.pop().split(' ')[0];
     const image = stdout.join('');
-    this.image = image;
-    return image;
+    this.image = {
+      encoded: image,
+      checksum,
+    };
+    return this.image;
+  }
+
+  /**
+   * Returns the SHA512 of the base64 encoded icon
+   */
+  async getImageChecksum(): Promise<ContainerImage['checksum']> {
+    const filePath = this.imagePath;
+
+    const { stdout, stderr, code } = await this.instance.execute(
+      `[ -f ${filePath} ] && (base64 -w 0 ${filePath} | sha512sum) || (base64 -w 0 ${questionIconLocation} | sha512sum)`
+    );
+    if (code !== 0) {
+      throw new Error(
+        `Unable to calculate image checksum for container ${this.id} / ${this.name}.\n${stdout}\n${stderr}`
+      );
+    }
+    return stdout.join('').split(' ')[0];
   }
 
   get state(): ContainerStates {

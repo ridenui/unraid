@@ -13,9 +13,10 @@ import { SSHExecutor } from '../src/executors';
   });
 
   const containers = await unraid.docker.list();
-  containers.forEach((container) => {
-    console.log(`${container.name} - ${container.state}`);
-  });
+  const img = await containers[0].getImage();
+  const checksum = await containers[0].getImageChecksum();
+  console.log(img.checksum);
+  console.log(checksum);
 
   unraid.executor.disconnect();
 })();
