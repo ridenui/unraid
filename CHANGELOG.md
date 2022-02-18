@@ -1,3 +1,5 @@
+## [0.16.1](https://github.com/ridenui/unraid/compare/0.16.0...0.16.1) (2022-02-18)
+
 # [0.16.0](https://github.com/ridenui/unraid/compare/0.15.6...0.16.0) (2022-02-18)
 
 
