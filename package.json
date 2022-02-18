@@ -1,6 +1,6 @@
 {
     "name": "@ridenui/unraid",
-    "version": "0.15.5",
+    "version": "0.15.6",
     "description": "A unraid nodejs API",
     "main": "dist/index.js",
     "files": [

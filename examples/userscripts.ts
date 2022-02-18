@@ -17,6 +17,6 @@ import { Unraid } from '../src/instance/unraid';
     const result = await unraid.unraid.getUserScripts(true);
 
     console.log(JSON.stringify(result, null, 4));
-
+  
     unraid.executor.disconnect();
 })();
