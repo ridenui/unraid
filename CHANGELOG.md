@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/ridenui/unraid/compare/0.15.6...0.16.0) (2022-02-18)
+
+
+### Features
+
+* **user.script:** add running state ([#26](https://github.com/ridenui/unraid/issues/26)) ([75f3f89](https://github.com/ridenui/unraid/commit/75f3f89eba73a5efefda8e8021c06a29b3f779ab)), closes [#25](https://github.com/ridenui/unraid/issues/25)
+
 ## [0.15.6](https://github.com/ridenui/unraid/compare/0.15.5...0.15.6) (2022-02-18)
 
 ## [0.15.5](https://github.com/ridenui/unraid/compare/0.15.4...0.15.5) (2022-02-18)
