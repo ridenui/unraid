@@ -1,4 +1,3 @@
-import { Executor, ExecutorConfigType } from '../../instance/executor';
 import { Unraid } from '../../instance/unraid';
 
 export class UnraidModuleExtensionBase {

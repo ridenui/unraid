@@ -28,3 +28,4 @@ jobs:
                   fail_on_error: true
             - name: TypeScript Compile
               run: yarn tsc
+              

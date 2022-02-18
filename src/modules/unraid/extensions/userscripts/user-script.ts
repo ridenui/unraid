@@ -1,4 +1,5 @@
 import type { Union } from 'ts-toolbelt';
+import { isUserScriptRunningScript } from '../../../../bash-scripts';
 import { Unraid } from '../../../../instance/unraid';
 
 type CacheState<Value> = {
@@ -9,7 +10,8 @@ type CacheState<Value> = {
 type CachedProperties =
     | { name: 'description'; value: string }
     | { name: 'name'; value: string }
-    | { name: 'script'; value: string };
+    | { name: 'script'; value: string }
+    | { name: 'running'; value: boolean };
 
 type CacheDictionary<Keys extends string = CachedProperties['name']> = {
     [key in Keys]: CacheState<Union.Select<CachedProperties, { name: key }>['value']>;
@@ -36,6 +38,9 @@ export class UserScript {
         script: {
             cached: false,
         },
+        running: {
+            cached: false,
+        },
     };
 
     constructor(instance: Unraid, id: string, scriptLocation: string, frequency: string) {
@@ -58,7 +63,22 @@ export class UserScript {
         return this.cache.description.value;
     }
 
-    async name() {
+    async running(byPassCache?: boolean): Promise<boolean> {
+        if (this.cache.running.cached && !byPassCache) {
+            return this.cache.running.value;
+        }
+        const { code } = await this.instance.execute(isUserScriptRunningScript(await this.name()));
+        if (code !== 0 && code !== 13) {
+            throw new Error('Got non-zero exit code while reading running state of userscript');
+        }
+        let running = false;
+        if (code === 0) running = true;
+        this.cache.running.value = running;
+        this.cache.running.cached = true;
+        return this.cache.running.value;
+    }
+
+    async name(): Promise<string> {
         if (this.cache.name.cached) {
             return this.cache.name.value;
         }
@@ -68,7 +88,7 @@ export class UserScript {
         return this.cache.name.value;
     }
 
-    async script() {
+    async script(): Promise<string> {
         if (this.cache.script.cached) {
             return this.cache.script.value;
         }
@@ -79,7 +99,7 @@ export class UserScript {
     }
 
     async prePopulateCache() {
-        return Promise.all([this.script(), this.name(), this.description()]);
+        return Promise.all([this.script(), this.name(), this.description(), this.running()]);
     }
 
     get populated() {
@@ -98,6 +118,7 @@ export class UserScript {
             scriptLocation: this.scriptLocation,
             directory: this.scriptDirectory,
             frequency: this.frequency,
+            running: this.cache.running.value,
         };
     }
 }
