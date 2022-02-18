@@ -6,27 +6,27 @@ import { SSHConfig, SSHExecutor } from '../src/executors';
 import { Unraid, UnraidConfig } from '../src/instance/unraid';
 
 (async () => {
-  const unraid = new Unraid({
-    executor: SSHExecutor,
-    executorConfig: {
-      host: process.env.SSH_HOST,
-      password: process.env.SSH_PASSWORD,
-      username: process.env.SSH_USER,
-      port: parseInt(process.env.SSH_PORT ?? '22', 10),
-    },
-  });
+    const unraid = new Unraid({
+        executor: SSHExecutor,
+        executorConfig: {
+            host: process.env.SSH_HOST,
+            password: process.env.SSH_PASSWORD,
+            username: process.env.SSH_USER,
+            port: parseInt(process.env.SSH_PORT ?? '22', 10),
+        },
+    });
 
-  const hostname = await unraid.system.getHostname();
+    const hostname = await unraid.system.getHostname();
 
-  console.log(hostname);
+    console.log(hostname);
 
-  const notificationCount = await unraid.unraid.getNotificationCount();
+    const notificationCount = await unraid.unraid.getNotificationCount();
 
-  console.log(notificationCount);
+    console.log(notificationCount);
 
-  const notifications = await unraid.unraid.getNotifications();
+    const notifications = await unraid.unraid.getNotifications();
 
-  console.log(notifications);
+    console.log(notifications);
 
-  unraid.executor.disconnect();
+    unraid.executor.disconnect();
 })();

@@ -1,19 +1,19 @@
 {
-  "github": {
-    "release": true
-  },
-  "git": {
-    "commitMessage": "chore(release): v${version}",
-    "assets": ["dist.zip"],
-    "requireCleanWorkingDir": false
-  },
-  "plugins": {
-    "@release-it/conventional-changelog": {
-      "preset": "angular",
-      "infile": "CHANGELOG.md"
+    "github": {
+        "release": true
+    },
+    "git": {
+        "commitMessage": "chore(release): v${version}",
+        "assets": ["dist.zip"],
+        "requireCleanWorkingDir": false
+    },
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "preset": "angular",
+            "infile": "CHANGELOG.md"
+        }
+    },
+    "npm": {
+        "skipChecks": true
     }
-  },
-  "npm": {
-    "skipChecks": true
-  }
 }
