@@ -1,46 +1,46 @@
 {
-    "name": "@ridenui/unraid",
-    "version": "0.15.4",
-    "description": "A unraid nodejs API",
-    "main": "dist/index.js",
-    "files": [
-        "dist/**"
-    ],
-    "author": "Tom Sacher",
-    "license": "MIT",
-    "private": false,
+  "name": "@ridenui/unraid",
+  "version": "0.15.5",
+  "description": "A unraid nodejs API",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**"
+  ],
+  "author": "Tom Sacher",
+  "license": "MIT",
+  "private": false,
+  "access": "public",
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^3.3.0",
+    "@types/ssh2": "^0.5.49",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "prettier": "^2.5.0",
+    "release-it": "^14.11.8",
+    "ts-node": "^10.4.0",
+    "typedoc": "^0.22.11",
+    "typedoc-plugin-merge-modules": "^3.1.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "ssh2": "^1.5.0",
+    "ts-mixer": "^6.0.0",
+    "ts-toolbelt": "^9.6.0"
+  },
+  "scripts": {
+    "release": "release-it",
+    "example:basic": "ts-node -r dotenv/config examples/basic.ts",
+    "example:notifications": "ts-node -r dotenv/config examples/notification_test.ts",
+    "example:userscripts": "ts-node -r dotenv/config examples/userscripts.ts"
+  },
+  "publishConfig": {
     "access": "public",
-    "devDependencies": {
-        "@release-it/conventional-changelog": "^3.3.0",
-        "@types/ssh2": "^0.5.49",
-        "@typescript-eslint/eslint-plugin": "^5.4.0",
-        "@typescript-eslint/parser": "^5.4.0",
-        "eslint": "^8.3.0",
-        "eslint-config-airbnb-base": "^15.0.0",
-        "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-import": "^2.25.3",
-        "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-simple-import-sort": "^7.0.0",
-        "prettier": "^2.5.1",
-        "release-it": "^14.11.8",
-        "ts-node": "^10.4.0",
-        "typedoc": "^0.22.11",
-        "typedoc-plugin-merge-modules": "^3.1.0",
-        "typescript": "^4.5.2"
-    },
-    "dependencies": {
-        "ssh2": "^1.5.0",
-        "ts-mixer": "^6.0.0",
-        "ts-toolbelt": "^9.6.0"
-    },
-    "scripts": {
-        "release": "release-it",
-        "example:basic": "ts-node -r dotenv/config examples/basic.ts",
-        "example:notifications": "ts-node -r dotenv/config examples/notification_test.ts",
-        "example:userscripts": "ts-node -r dotenv/config examples/userscripts.ts"
-    },
-    "publishConfig": {
-        "access": "public",
-        "registry": "https://registry.npmjs.org/"
-    }
+    "registry": "https://registry.npmjs.org/"
+  }
 }
