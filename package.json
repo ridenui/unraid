@@ -36,6 +36,7 @@
     "scripts": {
         "release": "release-it",
         "example:basic": "ts-node -r dotenv/config examples/basic.ts",
+        "example:cpu": "ts-node -r dotenv/config examples/cpu.ts",
         "example:notifications": "ts-node -r dotenv/config examples/notification_test.ts",
         "example:userscripts": "ts-node -r dotenv/config examples/userscripts.ts"
     },

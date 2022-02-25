@@ -51,7 +51,7 @@ export type ICpuUsageStreamOption = {
 };
 
 export class SystemModuleCpuExtension extends SystemModuleExtensionBase {
-    private static cpuUsageCommand = `TERM=xterm top -1 -n 1 -b | grep '^%Cpu[[:digit:]+]' | tr '\n' '|'`;
+    private static cpuUsageCommand = `COLUMNS=200 TERM=dumb top -1 -n 1 -b | grep '^%Cpu[[:digit:]+]' | tr '\n' '|'`;
 
     private static cpuLineRegex =
         /%Cpu(?<cpu_core>\d+)\s+:\s+(?<user>\d+.\d+(?=\s+us)).*?,\s*(?<system>\d+.\d+(?=\s+sy)).*?,\s*(?<nice>\d+.\d+(?=\s+ni)).*?,\s*(?<idle>\d+.\d+(?=\s+id)).*?,\s*(?<io_wait>\d+.\d+(?=\s+wa)).*?,\s*(?<hardware_interrupts>\d+.\d+(?=\s+hi)).*?,\s*(?<software_interrupts>\d+.\d+(?=\s+si)).*?,\s*(?<steal>\d+.\d+(?=\s+st))/gm;
@@ -86,36 +86,43 @@ export class SystemModuleCpuExtension extends SystemModuleExtensionBase {
             .split('|')
             .filter((v) => v);
 
+        console.log(coreLines);
+
         for (const line of coreLines) {
-            const match = SystemModuleCpuExtension.cpuLineRegex.exec(line);
-            const core = parseInt(match.groups.cpu_core, 10);
-            const user = parseFloat(match.groups.user);
-            const system = parseFloat(match.groups.system);
-            const nice = parseFloat(match.groups.nice);
-            const idle = parseFloat(match.groups.idle);
-            const ioWait = parseFloat(match.groups.io_wait);
-            const hardwareInterrupts = parseFloat(match.groups.hardware_interrupts);
-            const softwareInterrupts = parseFloat(match.groups.software_interrupts);
-            const steal = parseFloat(match.groups.steal);
-            tempUsage.all.usr += user;
-            tempUsage.all.sys += system;
-            tempUsage.all.nice += nice;
-            tempUsage.all.idle += idle;
-            tempUsage.all.ioWait += ioWait;
-            tempUsage.all.hardwareInterrupts += hardwareInterrupts;
-            tempUsage.all.softwareInterrupts += softwareInterrupts;
-            tempUsage.all.steal += steal;
-            tempUsage.cores.push({
-                core,
-                usr: user,
-                sys: system,
-                nice,
-                idle,
-                ioWait,
-                hardwareInterrupts,
-                softwareInterrupts,
-                steal,
-            });
+            let match = SystemModuleCpuExtension.cpuLineRegex.exec(line);
+
+            while (match !== null) {
+                const core = parseInt(match.groups.cpu_core, 10);
+                const user = parseFloat(match.groups.user);
+                const system = parseFloat(match.groups.system);
+                const nice = parseFloat(match.groups.nice);
+                const idle = parseFloat(match.groups.idle);
+                const ioWait = parseFloat(match.groups.io_wait);
+                const hardwareInterrupts = parseFloat(match.groups.hardware_interrupts);
+                const softwareInterrupts = parseFloat(match.groups.software_interrupts);
+                const steal = parseFloat(match.groups.steal);
+                tempUsage.all.usr += user;
+                tempUsage.all.sys += system;
+                tempUsage.all.nice += nice;
+                tempUsage.all.idle += idle;
+                tempUsage.all.ioWait += ioWait;
+                tempUsage.all.hardwareInterrupts += hardwareInterrupts;
+                tempUsage.all.softwareInterrupts += softwareInterrupts;
+                tempUsage.all.steal += steal;
+                tempUsage.cores.push({
+                    core,
+                    usr: user,
+                    sys: system,
+                    nice,
+                    idle,
+                    ioWait,
+                    hardwareInterrupts,
+                    softwareInterrupts,
+                    steal,
+                });
+                match = SystemModuleCpuExtension.cpuLineRegex.exec(line);
+            }
+
             SystemModuleCpuExtension.cpuLineRegex.lastIndex = 0;
         }
 
