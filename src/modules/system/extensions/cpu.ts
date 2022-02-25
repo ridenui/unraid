@@ -86,8 +86,6 @@ export class SystemModuleCpuExtension extends SystemModuleExtensionBase {
             .split('|')
             .filter((v) => v);
 
-        console.log(coreLines);
-
         for (const line of coreLines) {
             let match = SystemModuleCpuExtension.cpuLineRegex.exec(line);
 
