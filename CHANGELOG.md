@@ -1,3 +1,10 @@
+## [0.16.3](https://github.com/ridenui/unraid/compare/0.16.2...0.16.3) (2022-02-25)
+
+
+### Bug Fixes
+
+* **cpu:** correct the count of cpu cores for the new unraid beta ([499a814](https://github.com/ridenui/unraid/commit/499a8148164545661bb8544a64a1a3e6741e3c24))
+
 ## [0.16.2](https://github.com/ridenui/unraid/compare/0.16.1...0.16.2) (2022-02-22)
 
 
