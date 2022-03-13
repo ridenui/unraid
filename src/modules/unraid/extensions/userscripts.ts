@@ -1,3 +1,4 @@
+import { listUserscripts } from '../../../bash-scripts';
 import { UnraidModuleExtensionBase } from '../unraid-module-extension-base';
 import { UserScript } from './userscripts/user-script';
 
@@ -12,10 +13,20 @@ export interface IUserScriptSchedule {
     [key: string]: IScheduleTask;
 }
 
-export interface IUserScript {
-    script: string | null;
-    description: string | null;
-    name: string | null;
+export interface Schedule {
+    script: string;
+    frequency: string;
+    id: string;
+    custom: string;
+}
+
+export interface UserScriptJSON {
+    name: string;
+    dirName: string;
+    running: boolean;
+    script: string;
+    description?: string;
+    schedule: Schedule | null;
 }
 
 export class UnraidModuleUserScriptsExtension extends UnraidModuleExtensionBase {
@@ -30,25 +41,15 @@ export class UnraidModuleUserScriptsExtension extends UnraidModuleExtensionBase 
         return JSON.parse(stdout.join(''));
     }
 
-    async getUserScripts(prePopulate = false): Promise<UserScript[]> {
-        const schedule = await this.getUserScriptSchedule();
+    async getUserScripts(): Promise<UserScript[]> {
+        const { stdout, code } = await this.instance.execute(listUserscripts());
 
-        const tasks = Object.keys(schedule).map((task) => {
-            const scriptLocation = schedule[task].script;
-            const scriptInstance = new UserScript(
-                this.instance,
-                schedule[task].id,
-                scriptLocation,
-                schedule[task].frequency
-            );
-            return prePopulate
-                ? (async () => {
-                      await scriptInstance.prePopulateCache();
-                      return scriptInstance;
-                  })()
-                : scriptInstance;
+        if (code !== 0) throw new Error('Got non-zero exit code while reading userscripts');
+
+        const parsedUserScripts: UserScriptJSON[] = JSON.parse(stdout.join('\n'));
+
+        return parsedUserScripts.map((userScriptInfo) => {
+            return new UserScript(this.instance, userScriptInfo);
         });
-
-        return Promise.all(tasks);
     }
 }
