@@ -1,3 +1,10 @@
+## [0.16.6](https://github.com/ridenui/unraid/compare/0.16.5...0.16.6) (2022-03-14)
+
+
+### Bug Fixes
+
+* **user-scripts:** get all user-scripts ([#30](https://github.com/ridenui/unraid/issues/30)) ([fde9c8f](https://github.com/ridenui/unraid/commit/fde9c8f13b503af2dce4980d9d66f02c59301ff7))
+
 ## [0.16.5](https://github.com/ridenui/unraid/compare/0.16.4...0.16.5) (2022-02-26)
 
 ## [0.16.4](https://github.com/ridenui/unraid/compare/0.16.3...0.16.4) (2022-02-25)
