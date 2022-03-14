@@ -1,5 +1,5 @@
+import { Unraid } from '../src';
 import { SSHExecutor } from '../src/executors';
-import { Unraid } from '../src/instance/unraid';
 
 (async () => {
     const unraid = new Unraid({
@@ -14,7 +14,7 @@ import { Unraid } from '../src/instance/unraid';
 
     await unraid.executor.connect();
 
-    const result = await unraid.unraid.getUserScripts(true);
+    const result = await unraid.unraid.getUserScripts();
 
     console.log(JSON.stringify(result, null, 4));
     unraid.executor.disconnect();
