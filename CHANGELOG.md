@@ -1,3 +1,10 @@
+## [0.16.7](https://github.com/ridenui/unraid/compare/0.16.6...0.16.7) (2022-03-16)
+
+
+### Bug Fixes
+
+* **cpu:** cpu count on 100% load on core ([#31](https://github.com/ridenui/unraid/issues/31)) ([e811634](https://github.com/ridenui/unraid/commit/e81163481dad4a8c4ce901f5eebf7ef51a062e0b))
+
 ## [0.16.6](https://github.com/ridenui/unraid/compare/0.16.5...0.16.6) (2022-03-14)
 
 
