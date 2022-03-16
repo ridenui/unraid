@@ -16,6 +16,18 @@ import { SSHExecutor } from '../src/executors';
 
     const result = await unraid.unraid.getUserScripts();
 
-    console.log(JSON.stringify(result, null, 4));
+    for (const us of result) {
+        if (us.dirName === 'test') {
+            console.log(`Running: ${await us.running(true)}`);
+            await us.startBackground();
+            console.log(`Running: ${await us.running(true)}`);
+            await us.abort();
+            console.log(`Running: ${await us.running(true)}`);
+            const [emitter, cancel, resultPromise] = await us.start();
+            emitter.on('onNewStdoutLine', (line) => console.log(line));
+            await resultPromise;
+        }
+    }
+
     unraid.executor.disconnect();
 })();
