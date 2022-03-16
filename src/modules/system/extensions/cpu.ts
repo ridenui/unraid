@@ -54,7 +54,7 @@ export class SystemModuleCpuExtension extends SystemModuleExtensionBase {
     private static cpuUsageCommand = `COLUMNS=200 TERM=dumb top -1 -n 1 -b | grep '^%Cpu[[:digit:]+]' | tr '\n' '|'`;
 
     private static cpuLineRegex =
-        /%Cpu(?<cpu_core>\d+)\s+:\s+(?<user>\d+.\d+(?=\s+us)).*?,\s*(?<system>\d+.\d+(?=\s+sy)).*?,\s*(?<nice>\d+.\d+(?=\s+ni)).*?,\s*(?<idle>\d+.\d+(?=\s+id)).*?,\s*(?<io_wait>\d+.\d+(?=\s+wa)).*?,\s*(?<hardware_interrupts>\d+.\d+(?=\s+hi)).*?,\s*(?<software_interrupts>\d+.\d+(?=\s+si)).*?,\s*(?<steal>\d+.\d+(?=\s+st))/gm;
+        /%Cpu(?<cpu_core>\d+)\s+:\s*(?<user>\d+.\d+(?=\s+us)).*?,\s*(?<system>\d+.\d+(?=\s+sy)).*?,\s*(?<nice>\d+.\d+(?=\s+ni)).*?,\s*(?<idle>\d+.\d+(?=\s+id)).*?,\s*(?<io_wait>\d+.\d+(?=\s+wa)).*?,\s*(?<hardware_interrupts>\d+.\d+(?=\s+hi)).*?,\s*(?<software_interrupts>\d+.\d+(?=\s+si)).*?,\s*(?<steal>\d+.\d+(?=\s+st))/gm;
 
     async usage(): Promise<CPUUsage> {
         const { code, stdout } = await this.instance.execute(SystemModuleCpuExtension.cpuUsageCommand);
