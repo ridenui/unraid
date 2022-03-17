@@ -23,7 +23,7 @@ import { SSHExecutor } from '../src/executors';
             console.log(`Running: ${await us.running(true)}`);
             await us.abort();
             console.log(`Running: ${await us.running(true)}`);
-            const [emitter, cancel, resultPromise] = await us.start();
+            const [emitter, , resultPromise] = await us.start();
             emitter.on('onNewStdoutLine', (line) => console.log(line));
             await resultPromise;
         }
