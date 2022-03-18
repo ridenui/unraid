@@ -59,5 +59,8 @@ module.exports = {
                 ],
             },
         ],
+        'no-await-in-loop': 'off',
+        'no-continue': 'off',
+        'default-case': 'off',
     },
 };

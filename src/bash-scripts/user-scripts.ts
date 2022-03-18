@@ -1,14 +1,12 @@
-export const isUserScriptRunningScript = (name) => `for script in \`ls /tmp/user.scripts/running/\`
-do
-    if [[ "${name}" == $script ]]; then
-        pid=$(cat /tmp/user.scripts/running/$script)
-        ps --pid $pid > /dev/null
-        if [ "$?" -eq 0 ]; then
-            exit 0;
-        fi
+export const isUserScriptRunningScript = (name) => `if [[ -f "/tmp/user.scripts/running/${name}" ]]; then
+    pid=$(cat /tmp/user.scripts/running/${name})
+    ps --pid $pid > /dev/null
+    if [ "$?" -eq 0 ]; then
+        echo true
+        exit 0
     fi
-done
-exit 13`;
+fi
+echo false`;
 
 export const listUserscripts = () => `SECOND_ITERATION=""
 SCHEDULE_JSON=$(cat /boot/config/plugins/user.scripts/schedule.json)
@@ -66,3 +64,20 @@ do
     fi
 done
 printf "%s" "]"`;
+
+export const convertUserScript = (path: string) => `
+echo | php -B "\\$_POST['action'] = 'convertScript'; \\$_POST['path'] = '${path}';" -F /usr/local/emhttp/plugins/user.scripts/exec.php
+`;
+
+export const runConvertedUserScript = (tmpLocation: string) => `
+echo /usr/local/emhttp/plugins/user.scripts/startBackground.php "${tmpLocation}" | at NOW -M > /dev/null 2>&1
+sleep 1.5
+`;
+
+export const abortUserScript = (name: string) => `
+echo | php -B "\\$_POST['action'] = 'abortScript'; \\$_POST['name'] = '${name}';" -F /usr/local/emhttp/plugins/user.scripts/exec.php
+`;
+
+export const runForegroundUserScript = (command: string) => `export HOME=$(grep $(whoami) /etc/passwd | cut -d: -f 6)
+source \${HOME}/.bashrc
+${command}`;
