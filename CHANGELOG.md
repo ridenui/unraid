@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/ridenui/unraid/compare/0.16.7...0.17.0) (2022-03-18)
+
+
+### Features
+
+* **user-scripts:** user-script control ([#32](https://github.com/ridenui/unraid/issues/32)) ([79d6606](https://github.com/ridenui/unraid/commit/79d660666b5d338efc3d226b717ade68096bb471))
+
 ## [0.16.7](https://github.com/ridenui/unraid/compare/0.16.6...0.16.7) (2022-03-16)
 
 
